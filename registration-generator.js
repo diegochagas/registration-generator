@@ -1,3 +1,5 @@
+const namesJSON = require('./data/names.json').names;
+const familyNamesJSON = require('./data/family-names.json').familyNames;
 
 function generateRandomNumbers(n) {
   let randomNumber = Math.round(Math.random() * n);
@@ -17,161 +19,139 @@ function choseRandomOption(list) {
   return list[i];
 }
 
-function calculateFirstDigitCPF(number1, number2, number3, number5, number6, number7, number8, number9) {
-  let digit =  number9 * 2 + number8 * 3 + number7 * 4 + number6 * 5 + number5 * 6 + number7
-    + number3 * 8 + number2 * 9 + number1 * 10;
+function calculateFirstDigitCPF(numbers) {
+  let digit =  numbers[9] * 2 + numbers[8] * 3 + numbers[7] * 4 + numbers[6] * 5 + numbers[5] * 6 + numbers[7]
+    + numbers[3] * 8 + numbers[2] * 9 + numbers[1] * 10;
   digit = 11 - (this.mod(digit, 11));
-  if (digit >= 10) {
-    digit = 0;
-  }
-  return digit;
+  return (digit < 10) ? digit : 0;
 }
 
-function calculateSecondDigitCPF(number1, number2, number3, number4, number5, number6, number7,
-                                number8, number9, digit1) {
+function calculateSecondDigitCPF(numbers, digit1) {
   let digit2 = digit1 * 2 + number9 * 3 + number8 * 4 + number7 * 5 + number6 * 6 +
     number5 * 7 + number4 * 8 + number3 * 9 + number2 * 10 + number1 * 11;
   digit2 = 11 - (this.mod(digit2, 11));
-  if (digit2 >= 10) {
-    digit2 = 0;
-  }
-  return digit2;
+  return (digit2 < 10) ? digit2 : 0;
 }
 
-function constructStringCPF(number1, number2, number3, number4, number5, number6, number7,
-                            number8, number9, digit1, digit2) {
-  return '' + number1 + number2 + number3 + '.' + number4 + number5 + number6 + '.' + number7 +
-    number8 + number9 + '-' + digit1 + digit2;
+function printFullCPF(numbers, digit1, digit2) {
+  return '' + numbers[1] + numbers[2] + numbers[3] + '.' + numbers[4] + numbers[5] + numbers[6] +
+    '.' + numbers[7] + numbers[8] + numbers[9] + '-' + digit1 + digit2;
 }
 
 function generateBrazilianCPF() {
   const number = 9;
-  const number1 = this.generateRandomNumbers(number);
-  const number2 = this.generateRandomNumbers(number);
-  const number3 = this.generateRandomNumbers(number);
-  const number4 = this.generateRandomNumbers(number);
-  const number5 = this.generateRandomNumbers(number);
-  const number6 = this.generateRandomNumbers(number);
-  const number7 = this.generateRandomNumbers(number);
-  const number8 = this.generateRandomNumbers(number);
-  const number9 = this.generateRandomNumbers(number);
-  let digit1 = this.calculateFirstDigitCPF(number1, number2, number3, number5, number6, number7, number8, number9);
-  let digit2 = this.calculateSecondDigitCPF(number1, number2, number3, number4, number5, number6, number7, number8, number9, digit1);
-  return this.constructStringCPF(number1, number2, number3, number4, number5, number6, number7, number8, number9, digit1, digit2);
+  const numbers = [];
+  numbers[1] = this.generateRandomNumbers(number);
+  numbers[2] = this.generateRandomNumbers(number);
+  numbers[3] = this.generateRandomNumbers(number);
+  numbers[4] = this.generateRandomNumbers(number);
+  numbers[5] = this.generateRandomNumbers(number);
+  numbers[6] = this.generateRandomNumbers(number);
+  numbers[7] = this.generateRandomNumbers(number);
+  numbers[8] = this.generateRandomNumbers(number);
+  numbers[9] = this.generateRandomNumbers(number);
+  let digit1 = this.calculateFirstDigitCPF(numbers);
+  let digit2 = this.calculateSecondDigitCPF(numbers, digit1);
+  return this.printFullCPF(numbers, digit1, digit2);
 }
 
-function calculateFirstDigitCNPJ (number1, number2, number3, number4, number5, number6, number7, number8, number9, number10, number11, number12) {
-  let digit1 = number12 * 2 + number11 * 3 + number10 * 4 + number9 * 5 + number8 * 6+ number7 * 7 + number6 * 8 + number5 * 9 + number4 * 2 + number3 * 3 + number2 * 4 + number1 * 5;
-  digit1 = 11 - (this.mod(digit1,11));
-  if (digit1 >= 10) {
-    digit1 = 0;
-  }
-  return digit1;
+function calculateFirstDigitCNPJ (numbers) {
+  let digit1 = numbers[12] * 2 + numbers[11] * 3 + numbers[10] * 4 + numbers[9] * 5 + numbers[8] * 6
+    + numbers[7] * 7 + numbers[6] * 8 + numbers[5] * 9 + numbers[4] * 2 + numbers[3] * 3
+    + numbers[2] * 4 + numbers[1] * 5;
+  digit1 = 11 - (this.mod(digit1, 11));
+  return (digit1 < 10) ? digit1 : 0;
 }
 
-function calculateSecondDigitCNPJ (number1, number2, number3, number4, number5, number6, number7,
-                                  number8, number9, number10, number11, number12, digit1) {
-  let digit2 = digit1 * 2 + number12 * 3 + number11 * 4 + number10 * 5 + number9 * 6 + number8 * 7 + number7 * 8 + number6 * 9 + number5 * 2 + number4 * 3 + number3 * 4 + number2 * 5 + number1 * 6;
+function calculateSecondDigitCNPJ (numbers, digit1) {
+  let digit2 = digit1 * 2 + numbers[12] * 3 + numbers[11] * 4 + numbers[10] * 5 + numbers[9] * 6 +
+    numbers[8] * 7 + numbers[7] * 8 + numbers[6] * 9 + numbers[5] * 2 + numbers[4] * 3 + numbers[3]* 4 +
+      numbers[2] * 5 + numbers[1] * 6;
   digit2 = 11 - (this.mod(digit2, 11));
-  if (digit2 >= 10) {
-    digit2 = 0;
-  }
-  return digit2;
+  return (digit2 < 10) ? digit2 : 0;
 }
 
-function constructStringCNPJ (number1, number2, number3, number4, number5, number6, number7,
-                              number8, number9, number10, number11, number12, digit1, digit2) {
-  return '' + number1 + number2 + '.' + number3 + number4 + number5 + '.' + number6 + number7 +
-    number8 + '/' + number9 + number10 + number11 + number12 + '-'+ digit1 + digit2;
+function printFullCNPJ (numbers, digit1, digit2) {
+  return '' + numbers[1] + numbers[2] + '.' + numbers[3] + numbers[4] + numbers[5] + '.' +
+    numbers[6] + numbers[7] + numbers[8] + '/' + numbers[9] + numbers[10] + numbers[11] +
+    numbers[12] + '-'+ digit1 + digit2;
 }
 
 function generateBrazilianCNPJ() {
   const number = 9;
-  const number1 = this.generateRandomNumbers(number);
-  const number2 = this.generateRandomNumbers(number);
-  const number3 = this.generateRandomNumbers(number);
-  const number4 = this.generateRandomNumbers(number);
-  const number5 = this.generateRandomNumbers(number);
-  const number6 = this.generateRandomNumbers(number);
-  const number7 = this.generateRandomNumbers(number);
-  const number8 = this.generateRandomNumbers(number);
-  const number9 = 0;
-  const number10 = 0
-  const number11 = 0;
-  const number12 = 1;
-  let digit1 = calculateFirstDigitCNPJ(number1, number2, number3, number4, number5, number6,
-    number7, number8, number9, number10, number11, number12);
-  let digit2 = calculateSecondDigitCNPJ(number1, number2, number3, number4, number5, number6,
-    number7, number8, number9, number10, number11, number12, digit1);
-  return constructStringCNPJ(number1, number2, number3, number4, number5, number6, number7,
-    number8, number9, number10, number11, number12, digit1, digit2)
+  const numbers = [];
+  number[1] = this.generateRandomNumbers(number);
+  number[2] = this.generateRandomNumbers(number);
+  number[3] = this.generateRandomNumbers(number);
+  number[4] = this.generateRandomNumbers(number);
+  number[5] = this.generateRandomNumbers(number);
+  number[6] = this.generateRandomNumbers(number);
+  number[7] = this.generateRandomNumbers(number);
+  number[8] = this.generateRandomNumbers(number);
+  number[9] = 0;
+  number[10] = 0
+  number[11] = 0;
+  number[12] = 1;
+  let digit1 = calculateFirstDigitCNPJ(numbers);
+  let digit2 = calculateSecondDigitCNPJ(numbers, digit1);
+  return printFullCNPJ(numbers, digit1, digit2)
 }
 
-  // FIX CODE FROM HERE
-    function generateBrazilianTituloDeEleitor() {
-      let numero = [], soma1, soma2, parte1,parte2,parte3,parte4, dig1, dig2;
-
-      for(var i=1;i<=8;i++){
-        const n = 9;
-        numero[i] = this.generateRandomNumbers(n)%9;
-        numero[9] = this.generateRandomNumbers(n)%2;
-        numero[10] = this.generateRandomNumbers(n)%8;
-      }
-      //*==========================================*
-      //| Primeiro digito veridicador |
-      //*==========================================*
-      soma1=((numero[1]*2)+
-        (numero[2]*3)+
-        (numero[3]*4)+
-        (numero[4]*5)+
-        (numero[5]*6)+
-        (numero[6]*7)+
-        (numero[7]*8)+
-        (numero[8]*9));
-      parte1= parseInt((soma1 / 11));
-      parte2= (parte1 * 11);
-      dig1=(soma1 - parte2);
-      if(dig1>9)
-        dig1=0;
-      //*=========================================*
-      //| Segundo digito verificador |
-      //*=========================================*
-      soma2=((numero[9]*7)+
-        (numero[10]*8)+
-        (dig1*9));
-      parte3=parseInt(soma2 / 11);
-      parte4=(parte3 * 11);
-      dig2=(soma2 - parte4);
-      if(dig2>9)
-        dig2=0;
-      //*==========================================*
-      //| Impressao do numero completo |
-      //*==========================================*
-      var titulo = "";
-      for(var i=1;i<=10;i++){
-        titulo += numero[i];
-        if(i % 4 == 0)
-          titulo += " ";
-      }
-      return titulo += dig1 + dig2; //dois últimos digitos
-    }
-
-
-// Função para geração de Nomes
-function geraNome(){
-	var nomes = ['João', 'José', 'Allison', 'Arthur', 'Ana', 'Alex', 'Arlene', 'Alberto', 'Barry', 'Bertha', 'Bill', 'Bonnie', 'Bret', 'Beryl', 'Chantal', 'Cristobal', 'Claudette', 'Charley', 'Cindy', 'Chris', 'Dean', 'Dolly', 'Danny', 'Danielle', 'Dennis', 'Debby', 'Erin', 'Edouard', 'Erika', 'Earl', 'Emily', 'Ernesto', 'Felix', 'Fay', 'Fabian', 'Frances', 'Franklin', 'Florence', 'Gabielle', 'Gustavo', 'Grace', 'Gaston', 'Gert', 'Gordon', 'Humberto', 'Hanna', 'Henri', 'Hermine', 'Harvey', 'Helene', 'Iris', 'Isidore', 'Isabel', 'Ivan', 'Irene', 'Isaac', 'Jerry', 'Josephine', 'Juan', 'Jeanne', 'Jose', 'Joyce', 'Karen', 'Kyle', 'Kate', 'Karl', 'Katrina', 'Kirk', 'Lorenzo', 'Lili', 'Larry', 'Lisa', 'Lee', 'Leslie', 'Michelle', 'Marco', 'Mindy', 'Maria', 'Michael', 'Noel', 'Nana', 'Nicholas', 'Nicole', 'Nate', 'Nadine', 'Olga', 'Omar', 'Odette', 'Otto', 'Ophelia', 'Oscar', 'Pablo', 'Paloma', 'Peter', 'Paula', 'Philippe', 'Patty', 'Rebekah', 'Rene', 'Rose', 'Richard', 'Rita', 'Rafael', 'Sebastien', 'Sally', 'Sam', 'Shary', 'Stan', 'Sandy', 'Tanya', 'Teddy', 'Teresa', 'Tomas', 'Tammy', 'Tony', 'Van', 'Vicky', 'Victor', 'Virginie', 'Vince', 'Valerie', 'Wendy', 'Wilfred', 'Wanda', 'Walter', 'Wilma', 'William', 'Kumiko', 'Aki', 'Miharu', 'Chiaki', 'Michiyo', 'Itoe', 'Nanaho', 'Reina', 'Emi', 'Yumi', 'Ayumi', 'Kaori', 'Sayuri', 'Rie', 'Miyuki', 'Hitomi', 'Naoko', 'Miwa', 'Etsuko', 'Akane', 'Kazuko', 'Miyako', 'Youko', 'Sachiko', 'Mieko', 'Toshie', 'Junko', 'Silva', 'Ash', 'Jalmir', 'Rafael', 'Bruno', 'Daniel', 'Mariane', 'Andre', 'Diego'];
-    var n = nomes.length - 1;
-    var i = Math.round(Math.random()*n);
-	return nomes[i];
+function calculateFirstVerifyDigitTituloDeEleitor(numbers){
+  const sum1 = ((numbers[1] * 2) + (numbers[2] * 3) + (numbers[3] * 4) + (numbers[4] * 5) +
+    (numbers[5] * 6) + (numbers[6] * 7) + (numbers[7] * 8) + (numbers[8] * 9));
+  const part1 = parseInt((sum1 / 11));
+  const part2 = (part1 * 11);
+  let digit1 = (sum1 - part2);
+  return (digit1 <= 9) ? digit1 : 0;
 }
 
-// Função para geração de sobrenomes.
-function geraSobrenome(){
-	var sobrenomes = ['Cardoso', 'Chagas', 'Fernandes', 'Santana', 'Carvalho', 'Martins', 'Santos', 'Boaventura', 'Oliveira', 'Moraes', 'Leão', 'Garcia', 'Alves', 'Costa', 'Oliveira', 'Martinez', 'Novaes', 'Oliveira', 'Araújo', 'Maia', 'Vasconcelos', 'Gonçalves', 'Guimarães', 'Menezes', 'Sampaio', 'Cavalcante', 'Lacerda', 'Mello', 'Moraes', 'Muniz', 'Figueira', 'Paes', 'Lima', 'Marques', 'Duarte', 'Vasconcelos', 'Vieira', 'Souza', 'Soares', 'Silva', 'Duarte', 'Morais', 'Gomes', 'Paiva', 'Junqueira', 'Queiroz', 'Barreto', 'Menezzes', 'Campos', 'Pilar', 'Chaves', 'Paris', 'Lessa', 'Galisteu', 'Garcia', 'Frota', 'Araújo', 'Xavier', 'Ribeiro', 'Rodrigues', 'Freitas', 'Pinheiro', 'Moreira', 'Dias', 'Guimarães', 'Nogueira', 'Rocha', 'Albuquerque', 'Neves', 'Bernardes', 'Pereira', 'Camargo', 'Alencar', 'Batista', 'Andrade ', 'Reis', 'Amaral', 'Barcellos', 'Monteiro', 'Barreto', 'Frias', 'Medeiros', 'Gonçalves', 'Ferrari', 'Mesquita'];
-	var i = generateRandomNumbers(sobrenomes.length - 1);
-	var j = generateRandomNumbers(sobrenomes.length - 1);
-	return sobrenomes[i] + " " + sobrenomes[j];
+function calculateSecondVerifyDigitTituloDeEleitor(numbers, digit1) {
+  const sum2 = ((numbers[9] * 7) + (numbers[10] * 8) + (digit1 * 9));
+  const part3 = parseInt(sum2 / 11);
+  const part4 = (part3 * 11);
+  let digit2 = (sum2  - part4);
+  return (digit2 <=9) ? digit2 : 0;
 }
+
+function printFullTituloDeEleitor(digit1, digit2, numbers){
+  let title = "";
+  for(let i = 1; i <= 10; i++){
+    title += numbers[i];
+    if(i % 4 == 0)
+      title += " ";
+  }
+  title += digit1 + digit2;
+  return title;
+}
+
+function generateBrazilianTituloDeEleitor() {
+  let numero = [];
+  for(let i = 1; i <= 8; i++){
+    const n = 9;
+    numero[i] = this.generateRandomNumbers(n) % 9;
+    numero[9] = this.generateRandomNumbers(n) % 2;
+    numero[10] = this.generateRandomNumbers(n) % 8;
+  }
+  const digit1 = calculateFirstVerifyDigitTituloDeEleitor(numbers);
+  const digit2 = calculateSecondVerifyDigitTituloDeEleitor(numbers, digit1);
+  return printFullTituloDeEleitor(numbers, digit1, digit2);
+}
+
+function nameGenerator(){
+	const names = namesJSON;
+  const number = names.length - 1;
+  const i = Math.round(Math.random() * number);
+	return names[i];
+}
+
+function familyNameGenerator(){
+  const familyNames = familyNamesJSON;
+  const i = generateRandomNumbers(familyNames.length - 1);
+	return familyNames[i];
+}
+
+// FIX CODE FROM HERE
 
 // Função para gerar o segmento das empresas.
 function geraSegmento(){
