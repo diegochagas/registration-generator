@@ -160,7 +160,6 @@ export class AppComponent {
     }
     return titulo += dig1 + dig2; //dois últimos digitos
   }
-  /*
 
 
 // Função para geração de Nomes
