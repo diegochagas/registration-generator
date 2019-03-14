@@ -165,8 +165,9 @@ function printFullInscricaoEstadual(...digits) {
   return inscricaoEstadual;
 }
 
-function generateInscricaoEstadual(inscricaoEstadualHasMask = false) {
+function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false) {
   const states = brazilianStatesJSON;
+  states.push('SSP');
   const i = generateRandomNumbers(states.length - 1);
   const companyState = states[i];
   switch(companyState) {
@@ -188,7 +189,7 @@ function generateInscricaoEstadual(inscricaoEstadualHasMask = false) {
       digit2 = 11 - (mod(digit2, 11));
       digit2 = (digit2 < 10) ? digit2 : 0;
 
-      if (inscricaoEstadualHasMask) {
+      if (hasMask) {
           inscricaoEstadual =  '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] +
           digits[5] + '.' + digits[6] + digits[7] + digits[8] + '.' + digits[9] + digits[10] +
           digits[11] + '-' + digit1 + digit2;
@@ -244,7 +245,7 @@ function generateInscricaoEstadual(inscricaoEstadualHasMask = false) {
       if (digit >= 10) {
           digit = 0;
       }
-      if (inscricaoEstadualHasMask) {
+      if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] +
           '.' + digits[6] + digits[7] + digits[8] + '-' + digit;
       }
@@ -262,7 +263,7 @@ function generateInscricaoEstadual(inscricaoEstadualHasMask = false) {
         digits[2] * 7 + digits[1] * 8 ;
       digit2 = 11 - (mod(digit2, 11));
       if (digit2>=10) digit2 = 0;
-      if (inscricaoEstadualHasMask) {
+      if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
           digits[6] + '-' + digit1 + digit2;
       }
@@ -271,474 +272,374 @@ function generateInscricaoEstadual(inscricaoEstadualHasMask = false) {
       }
       break;
     case 'CE':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-      var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-      digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      const digits = generateDigits(8);
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'DF':
-      var n = 9;
-      var n1 = 0;
-      var n2 = 7;
-      var n3 = generateRandomNumbers(n);
-      var n4 = generateRandomNumbers(n);
-      var n5 = generateRandomNumbers(n);
-      var n6 = generateRandomNumbers(n);
-      var n7 = generateRandomNumbers(n);
-      var n8 = generateRandomNumbers(n);
-      var n9 = generateRandomNumbers(n);
-      var n10 = generateRandomNumbers(n);
-      var n11 = generateRandomNumbers(n);
-      var digit1 = n11*2+n10*3+n9*4+n8*5+n7*6+n6*7+n5*8+n4*9+n3*2+n2*3+n1*4;
-      digit1 = 11 - (mod(digit1,11));
-      if (digit1>=10) digit1 = 0;
-      var digit2 = digit1*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;
-      digit2 = 11 - (mod(digit2,11));
-      if (digit2>=10) digit2 = 0;
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+'.'+n3+n4+n5+'.'+n6+n7+n8+'.'+n9+n10+n11+'-'+digit1+digit2;
+      break;
+    case 'DF':
+      const digits = generateDigits(11);
+      digits[1] = 0;
+      digits[2] = 7;
+      let digit1 = digits[11] * 2 + digits[10] * 3+ digits[9] * 4 + digits[8] * 5 + digits[7] * 6 +
+        digits[6] * 7 + digits[5] * 8 + digits[4] * 9 +digits[3] * 2 +digits[2] * 3 +digits[1] * 4;
+      digit1 = 11 - (mod(digit1, 11));
+      if (digit1 >= 10) {
+        digit1 = 0;
       }
-      else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+digit1+digit2;
+      let digit2 = digit1 * 2 + digits[11] * 3 + digits[10] * 4 + digits[9] * 5 + digits[8] * 6 +
+        digits[7] * 7 + digits[6] * 8 + digits[5] * 9 + digits[4] * 2 + digits[3] * 3 +
+        digits[2] * 4 + digits[1] * 5;
+      digit2 = 11 - (mod(digit2, 11));
+      if (digit2>=10){
+        digit2 = 0;
       }
-        break;
-      case 'ES':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
-      }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] +
+          '.' + digits[6] + digits[7] + digits[8] + '.' + digits[9] + digits[10] + digits[11] +
+          '-' + digit1 + digit2;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+          inscricaoEstadual = printFullInscricaoEstadual(...digits, digit1, digit2);
       }
-        break;
-      case 'GO':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'ES':
+      const digits = generateDigits(8);
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit2 = mod(digit1, 11);
+      digit2 = 11 - (mod(digit1, 11));
+      if (digit2 >= 10) {
+        digit2 = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+'.'+n3+n4+n5+'.'+n6+n7+n8+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+          inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'MA':
-      var n = 9;
-      var n1  = 1;
-      var n2  = 2;
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'GO':
+      const digits = generateDigits(8);
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit = mod(digit1, 11);
+      digit = 11 - (mod(digit1, 11));
+      if (digit >= 10) {
+        digit = 0;
       }
-      inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
-        break;
-      case 'MS':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-      var n9  = generateRandomNumbers(n);
-      var n10  = generateRandomNumbers(n);
-              var digit1 = n10*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*2+n1*3;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
-      }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] +
+          '.' + digits[6] + digits[7] + digits[8] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+digit2;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'MT':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-      var n9  = generateRandomNumbers(n);
-      var n10  = generateRandomNumbers(n);
-              var digit1 = n10*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*2+n1*3;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'MA':
+      const digits = generateDigits(8);
+      digits[1] = 1;
+      digits[2] = 2;
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+'-'+digit2;
+      inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+      break;
+    case 'MS':
+      const digits = generateDigits(10);
+      let digit = digits[10] * 2 + digits[9] * 3 + digits[8] * 4 + digits[7] * 5 + digits[6] * 6 +
+        digits[5] * 7 + digits[4] * 8 + digits[3] * 9 + digits[2] * 2 + digits[1] * 3;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
       }
-      else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+digit2;
-      }
-        break;
-      case 'MG':
-        break;
-      case 'PA':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
-      }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + digits[9] + digits[10] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'PB':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'MT':
+      const digits = generateDigits(10);
+      let digit = digits[10] * 2 + digits[9] * 3 + digits[8] * 4 + digits[7] * 5 + digits[6] * 6 +
+        digits[5] * 7 + digits[4] * 8 + digits[3] * 9 + digits[2] * 2 + digits[1] * 3;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit2 >= 10) {
+        digit2 = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + digits[9] + digits[10] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+          inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'PR':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-      digit1 = 11 - (mod(digit1,11));
-      if (digit1>=10) digit1 = 0;
-      var digit2 = digit1*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*2+n2*3+n1*4;
-      digit2 = 11 - (mod(digit2,11));
-      if (digit2>=10) digit2 = 0;
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit1+digit2;
+      break;
+    case 'MG':
+      break;
+    case 'PA':
+      const digits = generateDigits(8);
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit1+digit2;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'PE':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-              var digit1 = n7*2+n6*3+n5*4+n4*5+n3*6+n2*7+n1*8;
-      digit1 = 11 - (mod(digit1,11));
-      if (digit1>=10) digit1 = 0;
-      var digit2 = digit1*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-      digit2 = 11 - (mod(digit2,11));
-      if (digit2>=10) digit2 = 0;
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+'-'+digit1+digit2;
+      break;
+    case 'PB':
+      const digits = generateDigits(8);
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+digit1+digit2;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'PI':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'PR':
+      const digits = generateDigits(8);
+      let digit1 = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit1 = 11 - (mod(digit1, 11));
+      if (digit1 >= 10){
+        digit1 = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit2;
+      let digit2 = digit1*2 + digits[8] * 3 + digits[7] * 4 + digits[6] * 5 + digits[5] * 6 +
+        digits[4] * 7 + digits[3] * 2 + digits[2] * 3 + digits[1] * 4;
+      digit2 = 11 - (mod(digit2, 11));
+      if (digit2 >= 10) {
+        digit2 = 0;
       }
-      else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
-      }
-        break;
-      case 'RJ':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n7*2+n6*3+n5*4+n4*5+n3*6+n2*7+n1*2;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
-      }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+'.'+n3+n4+n5+'.'+n6+n7+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit1 + digit2;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+          inscricaoEstadual = printFullInscricaoEstadual(...digits, digit1, digit2);
       }
-        break;
-      case 'RN':
-        break;
-      case 'RS':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-      var n9  = generateRandomNumbers(n);
-      var digit1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*2;
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'PE':
+      const digits = generateDigits(7);
+      let digit1 = digits[7] * 2 + digits[6] * 3 + digits[5] * 4 + digits[4] * 5 + digits[3] * 6 +
+        digits[2] * 7 + digits[1] * 8;
+      digit1 = 11 - (mod(digit1, 11));
+      if (digit1 >= 10) {
+        digit1 = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+'/'+n4+n5+n6+n7+n8+n9+digit2;
+      let digit2 = digit1*2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit2 = 11 - (mod(digit2, 11));
+      if (digit2 >= 10) {
+        digit2 = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + '-' + digit1 + digit2;
+      }
+      else {
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit1, digit2);
+      }
+      break;
+    case 'PI':
+      const digits = generateDigits(8);
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit;
+      }
+      else {
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+      }
+      break;
+    case 'RJ':
+      const digits = generateDigits(8);
+      let digit1 = digits[7] * 2 + digits[6] * 3 + digits[5] * 4 + digits[4] * 5 + digits[3] * 6 +
+        digits[2] * 7 + digits[1] * 2;
+      digit = mod(digit, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] +
+          '.' + digits[6] + digits[7] + '-' + digit;
+      }
+      else {
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+      }
+      break;
+    case 'RN':
+      break;
+    case 'RS':
+      const digits = generateDigits(9);
+      let digit = digits[9] * 2 + digits[8] * 3 + digits[7] * 4 + digits[6] * 5 + digits[5] * 6 +
+        digits[4] * 7 + digits[3] * 8 + digits[2] * 9 + digits[1] * 2;
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + '/' + digits[4] + digits[5] + digits[6] + digits[7] + digits[8] + digits[9] + digit2;
       }
       else {
           inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+digit2;
       }
-        break;
-      case 'RO':
-      var n = 9;
-      var n1 = 0;
-      var n2 = 7;
-      var n3 = generateRandomNumbers(n);
-      var n4 = generateRandomNumbers(n);
-      var n5 = generateRandomNumbers(n);
-      var n6 = generateRandomNumbers(n);
-      var n7 = generateRandomNumbers(n);
-      var n8 = generateRandomNumbers(n);
-      var n9 = generateRandomNumbers(n);
-      var n10 = generateRandomNumbers(n);
-      var n11 = generateRandomNumbers(n);
-      var n12 = generateRandomNumbers(n);
-      var n13 = generateRandomNumbers(n);
-      var digit1 = n13*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;
-      digit1 = 11 - (mod(digit1,11));
-      if (digit1>=10) digit1 = 0;
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+n13+'-'+digit1;
+      break;
+    case 'RO':
+      const digits = generateDigits(13);
+      digits[1] = 0;
+      digits[2] = 7;
+      let digit = n13*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + digits[9] + digits[10] + digits[11] + digits[12] +
+          digits[13] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+n13+digit1;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'RR':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*8+n7*7+n6*6+n5*5+n4*4+n3*3+n2*2+n1*1;
-      digit1 = 11 - (mod(digit1,11));
-      if (digit1>=10) digit1 = 0;
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit1;
+      break;
+    case 'RR':
+      const digits = generateDigits(8);
+      let digit = digits[8] * 8 + digits[7] * 7 + digits[6] * 6 + digits[5] * 5 + digits[4] * 4 +
+        digits[3] * 3 + digits[2] * 2 + digits[1] * 1;
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit1;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit1;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'SC':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'SC':
+      const digits = generateDigits(8);
+      var digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9 ;
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+'.'+n4+n5+n6+'.'+n7+n8+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + '.' + digits[4] + digits[5] +
+          digits[6] + '.' + digits[7] + digits[8] + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'SP':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-      var n10  = generateRandomNumbers(n);
-      var n11  = generateRandomNumbers(n);
-              var digit1 = n8*10+n7*8+n6*7+n5*6+n4*5+n3*4+n2*3+n1*1;
-      digit1 = 11 - (mod(digit1,11));
-      if (digit1>=10) digit1 = 0;
-      var digit2 = n11*2+n10*3+digit1*4+n8*5+n7*6+n6*7+n5*8+n4*9+n3*10+n2*2+n1*3;
-      digit2 = 11 - (mod(digit2,11));
-      if (digit2>=10) digit2 = 0;
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+'.'+n4+n5+n6+'.'+n7+n8+digit1+'.'+n10+n11+digit2;
+      break;
+    case 'SP':
+      const digits = generateDigits(11);
+      let digit1 = digits[8] * 10 + digits[7] * 8 + digits[6] * 7 + digits[5] * 6 + digits[4] * 5 +
+        digits[3] * 4 + digits[2] * 3 + digits[1] * 1;
+      digit1 = 11 - (mod(digit1, 11));
+      if (digit1 >= 10) {
+        digit1 = 0;
+      }
+      let digit2 = digits[11] * 2 + digits[10] * 3 + digit1 * 4 + digits[8] * 5 +
+        digits[7] * 6 + digits[6] * 7 + digits[5] * 8 + digits[4] * 9 + digits[3] * 10 +
+        digits[2] * 2 + digits[1] * 3;
+      digit2 = 11 - (mod(digit2, 11));
+      if (digit2 >= 10) {
+        digit2 = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + '.' + digits[4] + digits[5] +
+          digits[6] + '.' + digits[7] + digits[8] + digit1 + '.' + digits[10] + digits[11] + digit2;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit1+n10+n11+digit2;
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + digit1 + digits[10] + digits[11] + digit2;
       }
-        break;
-      case 'SPP':
-      var n = 9;
-      var n1  = 0;
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-      var n10  = generateRandomNumbers(n);
-      var n11  = generateRandomNumbers(n);
-      var n12  = generateRandomNumbers(n);
-              var digit1 = n8*10+n7*8+n6*7+n5*6+n4*5+n3*4+n2*3+n1*1;
-      digit1 = 11 - (mod(digit1,11));
-      if (digit1>=10) digit1 = 0;
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+'P-'+n1+n2+n3+n4+n5+n6+n7+n8+'.'+digit1+'/'+n10+n11+n12;
+      break;
+    case 'SPP':
+      const digits = generateDigits(12);
+      digits[1]  = 0;
+      let digit = digits[8] * 10 + digits[7] * 8 + digits[6] * 7 + digits[5] * 6 + digits[4] * 5 +
+        digits[3] * 4 + digits[2] * 3 + digits[1] * 1;
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
+      }
+      if (hasMask) {
+        inscricaoEstadual = '' + 'P-' + digits[1] + digits[2] + digits[3] + digits[4] +
+          digits[5] + digits[6] + digits[7] + digits[8] + '.' + digit1 + '/' + digits[10] +
+          digits[11] + digits[12];
       }
       else {
-          inscricaoEstadual = ''+'P'+n1+n2+n3+n4+n5+n6+n7+n8+digit1+n10+n11+n12;
+        inscricaoEstadual = '' + 'P' + digits[1] + digits[2] + digits[3] + digits[4] +
+          digits[5] + digits[6] + digits[7] + digits[8] + digit1 + digits[10] +
+          digits[11] + digits[12];
       }
-        break;
-      case 'SE':
-      var n = 9;
-      var n1  = generateRandomNumbers(n);
-      var n2  = generateRandomNumbers(n);
-      var n3  = generateRandomNumbers(n);
-      var n4  = generateRandomNumbers(n);
-      var n5  = generateRandomNumbers(n);
-      var n6  = generateRandomNumbers(n);
-      var n7  = generateRandomNumbers(n);
-      var n8  = generateRandomNumbers(n);
-              var digit1 = n8*2+n7*3+n6*4+n5*5+n4*6+n3*7+n2*8+n1*9;
-        digit2 = mod(digit1,11);
-      digit2 = 11 - (mod(digit1,11));
-      if (digit2>=10) {
-          digit2 = 0;
+      break;
+    case 'SE':
+      const digits = generateDigits(8);
+      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
+        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
+      digit = mod(digit1, 11);
+      digit = 11 - (mod(digit, 11));
+      if (digit >= 10) {
+        digit = 0;
       }
-      if (inscricaoEstadualHasMask) {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+'-'+digit2;
+      if (hasMask) {
+        inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
+          digits[6] + digits[7] + digits[8] + '-' + digit;
       }
       else {
-          inscricaoEstadual = ''+n1+n2+n3+n4+n5+n6+n7+n8+digit2;
+        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       }
-        break;
-      case 'TO':
-        break;
+      break;
+    case 'TO':
+      break;
     default:
-      inscricaoEstadual = 'Isento';
       break;
   }
   return inscricaoEstadual;
