@@ -789,7 +789,7 @@ function generateCellphone(){
   return cellphone;
 }
 
-function fillCreditCardInformations(creditCardFlag){
+function getCreditCardInformations(creditCardFlag){
   let flag = "";
   let startWith = "";
   let size = "";
@@ -885,21 +885,25 @@ function generateCreditCardBin(startWith, digits) {
   return bin;
 }
 
-function generateCredicard(){
-    const digits = generateDigits(6);
-    const sizeFirstDigits = startWith.length;
-    const card = fillCreditCardInformations();
-    const creditCardFlags = creditCardFlagsJSON;
-    const numberOfCreditCards = creditCardFlags.length - 1;
-    const creditCardFlag = generateRandomNumbers(numberOfCreditCards);
-    let bin = generateCreditCardBin(card.startWith, digits);
-    var randomSizeNumber = size - (bin.length + 1);
+function generateCreditCard(){
+  const creditCardFlags = creditCardFlagsJSON;
+  const numberOfCreditCards = creditCardFlags.length - 1;
+  const creditCardFlag = generateRandomNumbers(numberOfCreditCards);
+  const card = getCreditCardInformations(creditCardFlag);
 
-    var creditCardNumber = "" + bin;
-    for (var i = 0; i < randomSizeNumber; i++) {
-        let digit = generateRandomNumbers(9);
-        creditCardNumber += digit;
-    }
+  const digits = generateDigits(7);
+  const sizeFirstDigits = card.startWith.length;
+  let bin = generateCreditCardBin(card.startWith, digits);
+
+  const randomSizeNumber = size - (bin.length + 1);
+
+  let creditCardNumber = "" + bin;
+
+  for (var i = 0; i < randomSizeNumber; i++) {
+    let digit = generateRandomNumbers(9);
+    creditCardNumber += digit;
+  }
+
 
     // Faz o algotirmo de Luhn para gerar o dígito verificador.
     // O dígito verificador é um número necessário para fazer a soma de um múltiplo de 10.
