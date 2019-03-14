@@ -6,6 +6,7 @@ const CEPsJSON = require('./data/ceps').CEPs;
 const internetProvidersJSON = require('./data/internet-providers.json');
 const charactersJSON = require('./data/characters').characters;
 const RGsJSON = require('./data/brazilian-general-registrater').brazilianGeneralRegister;
+const creditCardFlagsJSON = require('./data/credit-cards').flags;
 
 function generateRandomNumbers(maximumNumber) {
   let randomNumber = Math.round(Math.random() * maximumNumber);
@@ -766,170 +767,146 @@ function generateStates(){
   return {name, acronym};
 }
 
-// Função para gerar os telefones residenciais.
-function geraTelefone(){
-  var ddd = Math.floor(Math.random() * (99 - 11 + 1)) + 11;
-  var digito1 = 3;
-  var digito2 = generateRandomNumbers(9);
-  var digito3 = generateRandomNumbers(9);
-  var digito4 = generateRandomNumbers(9);
-  var digito5 = generateRandomNumbers(9);
-  var digito6 = generateRandomNumbers(9);
-  var digito7 = generateRandomNumbers(9);
-  var digito8 = generateRandomNumbers(9);
-
-  return "" + ddd + digito1 + digito2 + digito3 + digito4 + digito5 + digito6 + digito7 + digito8;
+function generateTelephone(){
+  const ddd = Math.floor(Math.random() * (99 - 11 + 1)) + 11;
+  const digits = generateDigits(7);
+  let telephone = "" + ddd;
+  for(let i = 0; i < digits.length; i++) {
+    telephone += digits[i];
+  }
+  digits[0] = 3;
+  return telephone;
 }
 
-// Função para gerar os telefones celulares.
-function geraTelefoneCelular(){
-
-    var ddd = Math.floor(Math.random() * (99 - 11 + 1)) + 11;
-    var digito1 = generateRandomNumbers(9);
-    var digito2 = generateRandomNumbers(9);
-    var digito3 = generateRandomNumbers(9);
-    var digito4 = generateRandomNumbers(9);
-    var digito5 = generateRandomNumbers(9);
-    var digito6 = generateRandomNumbers(9);
-    var digito7 = generateRandomNumbers(9);
-    var digito8 = generateRandomNumbers(9);
-
-    return ddd + "9" + digito1 + digito2 + digito3 + digito4 + digito5 + digito6 + digito7 + digito8;
+function generateCellphone(){
+  const ddd = Math.floor(Math.random() * (99 - 11 + 1)) + 11;
+  const digits = generateDigits(8);
+  let cellphone = "" + ddd;
+  digits[0] = "9";
+  for(let i = 0; i < digits.length; i++) {
+    cellphone += digits[i];
+  }
+  return cellphone;
 }
 
-// Função para gerar altura
-function geraAltura(){
-    var alturaMin = 50;
-    var alturaMax = 210;
-    var alturaCm = Math.floor(Math.random() * (alturaMax - alturaMin + 1)) + alturaMin;
-    return alturaCm;
+function fillCreditCardInformations(creditCardFlag){
+  let flag = "";
+  let startWith = "";
+  let size = "";
+  let cvc = "";
+  switch(creditCardFlag) {
+    case "visa":
+      flag = "Visa";
+      startWith = "4";
+      size = choseRandomOption([13, 16]);
+      cvc = generateRandomNumbersWithInterval(100, 999);
+      break;
+    case "mastercard":
+    case "master":
+      flag = "Mastercard";
+      startWith = "5";
+      size = 16;
+      cvc = generateRandomNumbersWithInterval(100, 999);
+      break;
+    case "diners":
+      flag = "Diners";
+      startWith = choseRandomOption(['301','305','36','38']);
+      size = choseRandomOption([14,16]);
+      cvc = generateRandomNumbersWithInterval(100, 999);
+      break;
+    case "elo":
+      flag = "Elo";
+      startWith = choseRandomOption(['636368', '636369', '438935', '504175', '451416',
+        '636297', '5067', '4576', '4011', '506699']);
+      size = 16;
+      cvc = generateRandomNumbersWithInterval(100, 999);
+      break;
+    case "amex":
+      flag = "Amex";
+      startWith = choseRandomOption(['34','37']);
+      size = 15;
+      cvc = generateRandomNumbersWithInterval(1000, 9999);
+      break;
+    case "discover":
+      flag = "Discover";
+      startWith = choseRandomOption(['6011','622','64','65']);
+      size = 16;
+      cvc = generateRandomNumbersWithInterval(1000, 9999);
+      break;
+    case "aura":
+      flag = "Aura";
+      startWith = '50';
+      size = 16;
+      cvc = generateRandomNumbersWithInterval(100, 999);
+      break;
+    case "jcb":
+      flag = "jcb";
+      startWith = '35';
+      size = 16;
+      cvc = generateRandomNumbersWithInterval(100, 999);
+      break;
+    case "hipercard":
+      flag = "Hipercard";
+      startWith = choseRandomOption(['38','60']);
+      size = choseRandomOption([13,16,19]);
+      cvc = generateRandomNumbersWithInterval(100, 999);
+      break;
+    default:
+      console.error('CreditCard flat not found!');
+      break;
+  }
+  return { flag, startWith, size, cvc};
 }
 
-// Função para gerar peso
-function geraPeso(){
-    var pesoMin = 50;
-    var pesoMax = 300;
-    var peso = Math.floor(Math.random() * (pesoMax - pesoMin + 1)) + pesoMin;
-    return peso;
+function generateCreditCardBin(startWith, digits) {
+  let bin = "";
+  switch(sizeFirstDigits){
+    case 1:
+      bin = startWith + digits[2] + digits[3] + digits[4] + digits[5] + digits[6];
+      break;
+    case 2:
+      bin = startWith + digits[3] + digits[4] + digits[5] + digits[6];
+      break;
+    case 3:
+      bin = startWith + digits[4] + digits[5] + digits[6];
+      break;
+    case 4:
+      bin = startWith + digits[5] + digits[6];
+      break;
+    case 5:
+      bin = startWith + digits[6];
+      break;
+    case 6:
+      bin = startWith;
+      break;
+    default:
+      return `There isn't bin with ${sizeFirstDigits} characters!`;
+  }
+  return bin;
 }
 
-function geraSexo(input1, input2){
-    var i = generateRandomNumbers(1);
-    if(i == 0)
-        return input1;
-    return input2;
-}
+function generateCredicard(){
+    const digits = generateDigits(6);
+    const sizeFirstDigits = startWith.length;
+    const card = fillCreditCardInformations();
+    const creditCardFlags = creditCardFlagsJSON;
+    const numberOfCreditCards = creditCardFlags.length - 1;
+    const creditCardFlag = generateRandomNumbers(numberOfCreditCards);
+    let bin = generateCreditCardBin(card.startWith, digits);
+    var randomSizeNumber = size - (bin.length + 1);
 
-// Função para gerar número de cartão de crédito válido
-function geraCartaoDeCredito(cartao){
-
-    var bandeira, comecaCom, tamanho, cvc;
-
-    switch(cartao.toLowerCase()){
-        case "visa":
-            bandeira = "Visa";
-            comecaCom = "4";
-            tamanho = choseRandomOption([13,16]);
-            cvc = generateRandomNumbersWithInterval(100, 999);
-            break;
-        case "mastercard":
-        case "master":
-            bandeira = "Mastercard";
-            comecaCom = "5";
-            tamanho = 16;
-            cvc = generateRandomNumbersWithInterval(100, 999);
-            break;
-        case "diners":
-            bandeira = "Diners";
-            comecaCom = choseRandomOption(['301','305','36','38']);
-            tamanho = choseRandomOption([14,16]);
-            cvc = generateRandomNumbersWithInterval(100, 999);
-            break;
-        case "elo":
-            bandeira = "Elo";
-            comecaCom = choseRandomOption(['636368', '636369', '438935', '504175', '451416', '636297', '5067', '4576', '4011', '506699']);
-            tamanho = 16;
-            cvc = generateRandomNumbersWithInterval(100, 999);
-            break;
-        case "amex":
-            bandeira = "Amex";
-            comecaCom = choseRandomOption(['34','37']);
-            tamanho = 15;
-            cvc = generateRandomNumbersWithInterval(1000, 9999);
-            break;
-        case "discover":
-            bandeira = "Discover";
-            comecaCom = choseRandomOption(['6011','622','64','65']);
-            tamanho = 16;
-            cvc = generateRandomNumbersWithInterval(1000, 9999);
-            break;
-        case "aura":
-            bandeira = "Aura";
-            comecaCom = '50';
-            tamanho = 16;
-            cvc = generateRandomNumbersWithInterval(100, 999);
-            break;
-        case "jcb":
-            bandeira = "jcb";
-            comecaCom = '35';
-            tamanho = 16;
-            cvc = generateRandomNumbersWithInterval(100, 999);
-            break;
-        case "hipercard":
-            bandeira = "Hipercard";
-            comecaCom = choseRandomOption(['38','60']);
-            tamanho = choseRandomOption([13,16,19]);
-            cvc = generateRandomNumbersWithInterval(100, 999);
-            break;
-        default:
-            return "A opção " + i + " não pertencente a função";
-    }
-
-    var digito2 = generateRandomNumbers(9);
-    var digito3 = generateRandomNumbers(9);
-    var digito4 = generateRandomNumbers(9);
-    var digito5 = generateRandomNumbers(9);
-    var digito6 = generateRandomNumbers(9);
-    var digitos = comecaCom.length;
-    var bin;
-
-    switch(digitos){
-        case 1:
-            bin = comecaCom + digito2 + digito3 + digito4 + digito5 + digito6;
-            break;
-        case 2:
-            bin = comecaCom + digito3 + digito4 + digito5 + digito6;
-            break;
-        case 3:
-            bin = comecaCom + digito4 + digito5 + digito6;
-            break;
-        case 4:
-            bin = comecaCom + digito5 + digito6;
-            break;
-        case 5:
-            bin = comecaCom + digito6;
-            break;
-        case 6:
-            bin = comecaCom;
-            break;
-        default:
-            return "Não existe bin com " + digitos + " dígitos!";
-    }
-
-    var tamanhoNumeroRandom = tamanho - (bin.length + 1);
-
-    var numeroCartao = "" + bin;
-    for (var i = 0; i < tamanhoNumeroRandom; i++) {
-        var digito = generateRandomNumbers(9);
-        numeroCartao += digito;
+    var creditCardNumber = "" + bin;
+    for (var i = 0; i < randomSizeNumber; i++) {
+        let digit = generateRandomNumbers(9);
+        creditCardNumber += digit;
     }
 
     // Faz o algotirmo de Luhn para gerar o dígito verificador.
     // O dígito verificador é um número necessário para fazer a soma de um múltiplo de 10.
     var soma = 0;
-    for (var i = 0; i < numeroCartao.length; i++) {
+    for (var i = 0; i < creditCardNumber.length; i++) {
         // Pega o dígito na posição atual.
-        var digito = parseInt(numeroCartao.substring(i, (i + 1)));
+        var digito = parseInt(creditCardNumber.substring(i, (i + 1)));
 
         if ((i % 2) == 0) {
             digito = digito * 2;
@@ -941,9 +918,9 @@ function geraCartaoDeCredito(cartao){
     var modulo = mod(soma, 10);
 
     var digitoVerificador = (modulo == 0) ? 0 : 10 - modulo;
-    numeroCartao += digitoVerificador;
+    creditCardNumber += digitoVerificador;
     var data = generateDate(2018, 2026);
     var validade = data.mes + "/" + data.year;
 
-    return {bandeira, numeroCartao, cvc, validade};
+    return {flag, creditCardNumber, cvc, validade};
 }

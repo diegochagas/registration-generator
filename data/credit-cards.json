@@ -1,0 +1,14 @@
+{
+  "flags": [
+    "visa",
+    "mastercard",
+    "master",
+    "diners",
+    "elo",
+    "amex",
+    "discover",
+    "aura",
+    "jcb",
+    "hipercard"
+  ]
+}
