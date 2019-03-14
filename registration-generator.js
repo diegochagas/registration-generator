@@ -1,7 +1,11 @@
 const namesJSON = require('./data/names.json').names;
 const familyNamesJSON = require('./data/family-names.json').familyNames;
 const workSegmentJSON = require('./data/work-segment.json').workSegment;
-const brazilianStatesJSON = require('./data/brazilian-states.json').brazilianStates;
+const brazilianStatesJSON = require('./data/brazilian-states.json');
+const CEPsJSON = require('./data/ceps').CEPs;
+const internetProvidersJSON = require('./data/internet-providers.json');
+const charactersJSON = require('./data/characters').characters;
+const RGsJSON = require('./data/brazilian-general-registrater').brazilianGeneralRegister;
 
 function generateRandomNumbers(maximumNumber) {
   let randomNumber = Math.round(Math.random() * maximumNumber);
@@ -166,10 +170,10 @@ function printFullInscricaoEstadual(...digits) {
 }
 
 function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false) {
-  const states = brazilianStatesJSON;
+  const states = brazilianStatesJSON.acronyms;
   states.push('SSP');
-  const i = generateRandomNumbers(states.length - 1);
-  const companyState = states[i];
+  const randomIndex = generateRandomNumbers(states.length - 1);
+  const companyState = states[randomIndex];
   switch(companyState) {
     case 'AC':
       const digits = generateDigits(9);
@@ -646,153 +650,135 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
 }
 
 function generateBirthDate(){
-    var dataAtual = new Date();
-    var anoMax = dataAtual.getFullYear() - 18;
-    var anoMin = 1900;
-    return geraData(anoMin, anoMax);
+    var actualDate = new Date();
+    var maxYear = actualDate.getFullYear() - 18;
+    var minYear = 1900;
+    return generateDate(minYear, maxYear);
 }
 
-function geraDataValidade(){
-    var dataAtual = new Date();
-    var anoMin = dataAtual.getFullYear() + 1;
-    var anoMax = anoMin + generateRandomNumbers(9);
-    return geraData(anoMin, anoMax);
+function generateExpirationDate(){
+    var actualDate = new Date();
+    var minYear = actualDate.getFullYear() + 1;
+    var maxYear = minYear + generateRandomNumbers(9);
+    return generateDate(minYear, maxYear);
 }
 
-function geraData(anoMin, anoMax){
-
-    var ano = Math.floor(Math.random() * (anoMax - anoMin + 1)) + anoMin;
-    var mes = generateRandomNumbers(11) + 1;
-    var dia = 1;
-
-    // Mês com 31 dias
-    if( (mes==01) || (mes==03) || (mes==05) || (mes==07) || (mes==08) || (mes==10) || (mes==12) )
-        dia = generateRandomNumbers(30) + 1;
-    // Mês com 30 dias
-    else if( (mes==04) || (mes==06) || (mes==09) || (mes==11) )
-        dia = generateRandomNumbers(29) + 1;
-    // Se for o mês de Fevereiro.
-    else if( (mes==02) ){
-        // Se for ano bissexto
-        if( (ano % 4 == 0) && ( (ano % 100 != 0) || (ano % 400 == 0) ) )
-            dia = generateRandomNumbers(28) + 1;
-        // Se não for ano bissexto.
-        else
-            dia = generateRandomNumbers(27) + 1;
-    }
-    if(dia < 10)
-        dia = "0" + dia;
-    if(mes < 10)
-        mes = "0" + mes;
-    var dataCompleta = dia + "/" + mes + "/" + ano;
-    return {dia, mes, ano, dataCompleta};
+function getTotalOfDaysOfAMonth(month){
+  let totalOfDays = 0;
+  let isMonthWith31Days = (month === 01) || (month === 03) || (month === 05) || (month === 07) ||
+    (month === 08) || (month === 10) || (month === 12);
+  let isMonthWith30Days = (month === 04) || (month === 06) || (month === 09) || (month === 11);
+  let isFebruary = (month === 02);
+  let isLeapYear = (year % 4 === 0) && ( (year % 100 !== 0) || (year % 400 === 0) );
+  if (isMonthWith31Days) {
+    totalOfDays = 30;
+  }
+  else if (isMonthWith30Days) {
+    totalOfDays = 29;
+  }
+  else if (isFebruary) {
+      if(isLeapYear) {
+        totalOfDays = 28;
+      } else {
+        totalOfDays = 27;
+      }
+  }
+  return totalOfDays;
 }
 
-// Função parar gerar o site da empresa
-function geraSite(nome){
-    var nomeSite = nome.replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
-    var segmento = geraSegmento().replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
-    return "www." + nomeSite + segmento + ".com.br"
+function generateDate(minYear, maxYear){
+  let year = Math.floor(Math.random() * (maxYear - minYear + 1)) + minYear;
+  let month = generateRandomNumbers(11) + 1;
+  let day = 1;
+  day = generateRandomNumbers(getTotalOfDaysOfAMonth(month)) + 1;
+  if (day < 10) {
+    day = "0" + day;
+  }
+  if (month < 10) {
+    month = "0" + month;
+  }
+  const fullDate = day + "/" + month + "/" + year;
+  return {day, month, year, fullDate};
 }
 
-// Função parar gerar o cep
-function geraCep(){
-    var ceps = ['69905038','69922215','57325970','57070528','69095312','69020022','68908199','68909134','45310971','45078618','60835355','60511200','72543204','72543204','29306025','29305602','75806090','74982460','65071480','65073560','65916283','38183187','39408304','79333160','79826020','78075866','78715574','66070660','66830724','58059402','58034575','50720165','55150040','64049484','64027424','83505040','81930374','24935475','26290294','59151500','59073000','59078570','97110370','91787568','76824090','76820268','69313045','69314619','89215440','88161332','49045373','49050563','77001486','77016412','18400803','18400803','02841180','03819130','09980181','16901430','09172422', "11712330"];
-    var n = ceps.length - 1;
-    var i = Math.round(Math.random()*n);
-    return ceps[i];
+function generateCompanyWebsite(name){
+    var websiteName = name.replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
+    var workSegment = generateWorkSegment().replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
+    return "www." + websiteName + workSegment + ".com.br"
 }
 
-function geraCepDividido(){
-    var cepCompleto = geraCep();
-    var local = cepCompleto.substring(0,5);
-    var identificadores = cepCompleto.substring(8,5);
-    return {local, identificadores};
+function generateCEP(){
+  const ceps = CEPsJSON;
+  const amountOfCEPs = ceps.length - 1;
+  const i = generateRandomNumbers(amountOfCEPs);
+  const fullCEP = ceps[i];
+  const local = fullCEP.substring(0,5);
+  const identifier = fullCEP.substring(8,5);
+  return {fullCEP, local, identifier};
 }
 
-// Função parar gerar complemento de endereço
-function geraComplemento(){
-    var complemento = ['Ap. 107 ', 'Casa 35 ', 'Casa A', 'Casa A', 'Vila', 'Sítio'];
-    var i = generateRandomNumbers(complemento.length - 1);
-    return complemento[i];
+function generateAddressComplement(){
+  const complements = ['Ap. 107 ', 'Casa 35 ', 'Casa A', 'Casa A', 'Vila', 'Sítio'];
+  const i = generateRandomNumbers(complements.length - 1);
+  return complements[i];
 }
 
-// Função parar gerar o email empresarial.
-function geraEmailEmpresarial(nome, sobrenome){
-    var nomeEmail = nome.replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
-    var segmento = geraSegmento().replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
-    return nomeEmail + "@" + nomeEmail + segmento + ".com.br"
+function generateCompanyEmail(name){
+    const emailName = name.replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
+    const workSegment = generateWorkSegment().replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
+    return emailName + "@" + emailName + workSegment + ".com.br"
 }
 
-// Função parar gerar o email pessoal.
-function geraEmailPessoal(nome){
-    var nomeEmail = nome.replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
-    var provedores = ["aliciavet", "vaol", "MSNV", "abralink", "vuol", "quentemail", "estrelanet.com", "vzipmail", "axapc", "mailcity", "vmail", "vol", "fgmail", "fig", "fyahoo", "fbol", "fhotmail"];
-    var i = generateRandomNumbers(provedores.length - 1);
-    var br = "";
-    var brasil = generateRandomNumbers(1);
-    if(brasil == 1)
-        br = ".br";
-    return nomeEmail + "@" + provedores[i] + ".com" + br;
+function generateEmail(name){
+  const emailName = name.replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
+  const providers = internetProvidersJSON;
+  const i = generateRandomNumbers(providers.length - 1);
+  const isBrazilian = (generateRandomNumbers(1) === 1) ? ".br" : "";
+  return emailName + "@" + providers[i] + ".com" + isBrazilian;
 }
 
-function geraEmailProvedorValido(nome){
-    var provedores = ["gmail.com", "yahoo.com.br", "bol.com.br", "msn.com", "ig.com.br", "globo.com", "oi.com.br", "pop.com.br", "r7.com.br", "folha.com.br", "uol.com", "outlook.com", "zoho.com", "mail.com", "gmx.com", "fastmail.com", "hushmail.com", "inbox.com", "zipmail.com.br", "limao.com.br", "espn.com"];
-    var nomeEmail = nome.replace(/[áéíóúàèìòùâêîôûãõç\s]/g,"").toLowerCase();
-    var i = generateRandomNumbers(provedores.length - 1);
-    return nomeEmail + "@" + provedores[i];
+function generatePassword() {
+  const characters = [];
+  const amountOfDigits = 8;
+  const amountOfCharacters = characters.length - 1;
+  let password = "";
+  for(let i = 0; i <= amountOfDigits; i++) {
+    let index = generateRandomNumbers(amountOfCharacters);
+    password += characters[index];
+  }
+  return password;
 }
 
-// Função parar gerar a senha.
-function geraSenha(){
-    var caracteres = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","u","v","w","x","y","z", "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","U","V","W","X","Y","Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "{", "]", "}", "\"", "\|", ";", ":", "'", "\"","<", ".", ">", "/", "?"];
-
-    var i = caracteres.length - 1;
-    var digito1 = caracteres[generateRandomNumbers(i)];
-    var digito2 = caracteres[generateRandomNumbers(i)];
-    var digito3 = caracteres[generateRandomNumbers(i)];
-    var digito4 = caracteres[generateRandomNumbers(i)];
-    var digito5 = caracteres[generateRandomNumbers(i)];
-    var digito6 = caracteres[generateRandomNumbers(i)];
-    var digito7 = caracteres[generateRandomNumbers(i)];
-    var digito8 = caracteres[generateRandomNumbers(i)];
-
-    return digito1 + digito2 + digito3 + digito4 + digito5 + digito6 + digito7 + digito8;
+function generateRG() {
+    var RGs = RGsJSON;
+    const amountOfRGs = RGs.length - 1;
+    const randomIndex = generateRandomNumbers(amountOfRGs);
+    return RGs[randomIndex];
 }
 
-// Função para gerar o RG.
-function geraRg() {
-    var rg = ['911225341', '91.122.534-1', '403289440', '4.032.894-40', '418757896', '41.875.789-6','2977269','2.977.269','429434121','42.943.412-1'];
-    var i = generateRandomNumbers(rg.length - 1);
-    return rg[i];
-}
-
-// Função para gerar o estados do Brasil
-function geraEstados(){
-    var nomes = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"];
-    var siglas = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
-
-    var i = generateRandomNumbers(nomes.length - 1);
-    var nome = nomes[i];
-    var sigla = siglas[i];
-
-    return {nome, sigla};
+function generateStates(){
+  const names = brazilianStatesJSON.names;
+  const acronyms = brazilianStatesJSON.acronyms;
+  const amountOfStates = nomes.length - 1;
+  const randomIndex = generateRandomNumbers(amountOfStates);
+  const name = names[randomIndex];
+  const acronym = acronyms[randomIndex];
+  return {name, acronym};
 }
 
 // Função para gerar os telefones residenciais.
 function geraTelefone(){
+  var ddd = Math.floor(Math.random() * (99 - 11 + 1)) + 11;
+  var digito1 = 3;
+  var digito2 = generateRandomNumbers(9);
+  var digito3 = generateRandomNumbers(9);
+  var digito4 = generateRandomNumbers(9);
+  var digito5 = generateRandomNumbers(9);
+  var digito6 = generateRandomNumbers(9);
+  var digito7 = generateRandomNumbers(9);
+  var digito8 = generateRandomNumbers(9);
 
-    var ddd = Math.floor(Math.random() * (99 - 11 + 1)) + 11;
-    var digito1 = 3;
-    var digito2 = generateRandomNumbers(9);
-    var digito3 = generateRandomNumbers(9);
-    var digito4 = generateRandomNumbers(9);
-    var digito5 = generateRandomNumbers(9);
-    var digito6 = generateRandomNumbers(9);
-    var digito7 = generateRandomNumbers(9);
-    var digito8 = generateRandomNumbers(9);
-
-    return "" + ddd + digito1 + digito2 + digito3 + digito4 + digito5 + digito6 + digito7 + digito8;
+  return "" + ddd + digito1 + digito2 + digito3 + digito4 + digito5 + digito6 + digito7 + digito8;
 }
 
 // Função para gerar os telefones celulares.
@@ -956,8 +942,8 @@ function geraCartaoDeCredito(cartao){
 
     var digitoVerificador = (modulo == 0) ? 0 : 10 - modulo;
     numeroCartao += digitoVerificador;
-    var data = geraData(2018, 2026);
-    var validade = data.mes + "/" + data.ano;
+    var data = generateDate(2018, 2026);
+    var validade = data.mes + "/" + data.year;
 
     return {bandeira, numeroCartao, cvc, validade};
 }
