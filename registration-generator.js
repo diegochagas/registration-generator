@@ -86,12 +86,12 @@ function generateBrazilianCNPJ() {
   const number = 9;
   const digits = generateDigits(12);
   digits[9] = 0;
-  digits[10] = 0
+  digits[10] = 0;
   digits[11] = 0;
   digits[12] = 1;
   let digit1 = calculateFirstDigitCNPJ(digits);
   let digit2 = calculateSecondDigitCNPJ(digits, digit1);
-  return printFullCNPJ(digits, digit1, digit2)
+  return printFullCNPJ(digits, digit1, digit2);
 }
 
 function calculateFirstVerifyDigitTituloDeEleitor(digits){
@@ -175,9 +175,10 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
   states.push('SSP');
   const randomIndex = generateRandomNumbers(states.length - 1);
   const companyState = states[randomIndex];
+  const digits = [];
   switch(companyState) {
     case 'AC':
-      const digits = generateDigits(9);
+      digits = generateDigits(9);
 
       digits[1] = 0;
       digits[2] = 1;
@@ -204,7 +205,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'AL':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       digits[1]  = 2;
       digits[2]  = 4;
       if(digits[3] == 1) {
@@ -229,7 +230,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       break;
     case 'AP':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       digits[1]  = 0;
       digits[2]  = 3;
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
@@ -242,7 +243,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       break;
     case 'AM':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
         digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
       digit = mod(digit, 11);
@@ -259,7 +260,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'BA':
-      const digits = generateDigits(6);
+      digits = generateDigits(6);
       let digit1 = digits[6] * 2 + digits[5] * 3 + digits[4] * 4 + digits[3] * 5 +
         digits[2] * 6 + digits[1] * 7;
       digit1 = 11 - (mod(digit1, 11));
@@ -277,7 +278,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'CE':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
         digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
       digit = mod(digit, 11);
@@ -294,7 +295,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'DF':
-      const digits = generateDigits(11);
+      digits = generateDigits(11);
       digits[1] = 0;
       digits[2] = 7;
       let digit1 = digits[11] * 2 + digits[10] * 3+ digits[9] * 4 + digits[8] * 5 + digits[7] * 6 +
@@ -320,7 +321,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'ES':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
         digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
       digit2 = mod(digit1, 11);
@@ -337,7 +338,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'GO':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
         digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
       digit = mod(digit1, 11);
@@ -354,7 +355,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'MA':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       digits[1] = 1;
       digits[2] = 2;
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
@@ -367,7 +368,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
       break;
     case 'MS':
-      const digits = generateDigits(10);
+      digits = generateDigits(10);
       let digit = digits[10] * 2 + digits[9] * 3 + digits[8] * 4 + digits[7] * 5 + digits[6] * 6 +
         digits[5] * 7 + digits[4] * 8 + digits[3] * 9 + digits[2] * 2 + digits[1] * 3;
       digit = mod(digit, 11);
@@ -384,7 +385,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'MT':
-      const digits = generateDigits(10);
+      digits = generateDigits(10);
       let digit = digits[10] * 2 + digits[9] * 3 + digits[8] * 4 + digits[7] * 5 + digits[6] * 6 +
         digits[5] * 7 + digits[4] * 8 + digits[3] * 9 + digits[2] * 2 + digits[1] * 3;
       digit = mod(digit, 11);
@@ -403,7 +404,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
     case 'MG':
       break;
     case 'PA':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
         digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
       digit = mod(digit, 11);
@@ -420,7 +421,7 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       }
       break;
     case 'PB':
-      const digits = generateDigits(8);
+      digits = generateDigits(8);
       let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
         digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
       digit = mod(digit, 11);
@@ -739,7 +740,7 @@ function generateEmail(name){
 }
 
 function generatePassword() {
-  const characters = [];
+  const characters = charactersJSON;
   const amountOfDigits = 8;
   const amountOfCharacters = characters.length - 1;
   let password = "";
@@ -860,45 +861,43 @@ function generateCreditCardBin(startWith, digits) {
   return bin;
 }
 
-function generateCreditCard(){
-  const creditCardFlags = creditCardFlagsJSON;
-  const numberOfCreditCards = creditCardFlags.length - 1;
-  const creditCardFlag = generateRandomNumbers(numberOfCreditCards);
-  const card = getCreditCardInformations(creditCardFlag);
+function calculateVerifyDigitCreditCard(creditCardNumber) {
+  let sum = 0;
+  for (let i = 0; i < creditCardNumber.length; i++) {
+    let digitCurrentPosition = parseInt(creditCardNumber.substring(i, (i + 1)));
+    if ((i % 2) == 0) {
+      digitCurrentPosition = digitCurrentPosition * 2;
+      if (digitCurrentPosition > 9)
+        digitCurrentPosition = (digitCurrentPosition / 10) + mod(digitCurrentPosition, 10);
+    }
+    sum += digitCurrentPosition;
+  }
+  const multipleOf10 = mod(sum, 10);
+  const verifyDigit = (multipleOf10 === 0) ? 0 : 10 - multipleOf10;
+  return verifyDigit;
+}
 
+function printFullCreditCardNumber(card){
   const digits = generateDigits(7);
-  let bin = generateCreditCardBin(card.startWith, digits);
-
+  const bin = generateCreditCardBin(card.startWith, digits);
   const randomSizeNumber = size - (bin.length + 1);
-
   let creditCardNumber = "" + bin;
-
-  for (var i = 0; i < randomSizeNumber; i++) {
+  for (let i = 0; i < randomSizeNumber; i++) {
     let digit = generateRandomNumbers(9);
     creditCardNumber += digit;
   }
+  const verifyDigit = calculateVerifyDigitCreditCard(creditCardNumber);
+  creditCardNumber += verifyDigit;
+  return creditCardNumber;
+}
 
-
-    // Faz o algotirmo de Luhn para gerar o dígito verificador.
-    // O dígito verificador é um número necessário para fazer a soma de um múltiplo de 10.
-    var soma = 0;
-    for (var i = 0; i < creditCardNumber.length; i++) {
-        // Pega o dígito na posição atual.
-        var digito = parseInt(creditCardNumber.substring(i, (i + 1)));
-
-        if ((i % 2) == 0) {
-            digito = digito * 2;
-            if (digito > 9)
-                digito = (digito / 10) + mod(digito,10);
-        }
-        soma += digito;
-    }
-    var modulo = mod(soma, 10);
-
-    var digitoVerificador = (modulo == 0) ? 0 : 10 - modulo;
-    creditCardNumber += digitoVerificador;
-    var data = generateDate(2018, 2026);
-    var validade = data.mes + "/" + data.year;
-
-    return {flag, creditCardNumber, cvc, validade};
+function generateCreditCard(){
+  const creditCardFlags = creditCardFlagsJSON;
+  const totalOfCreditCards = creditCardFlags.length - 1;
+  const creditCardFlag = generateRandomNumbers(totalOfCreditCards);
+  const card = getCreditCardInformations(creditCardFlag);
+  const creditCardNumber = printFullCreditCardNumber(card);
+  let date = generateDate(2018, 2026);
+  let expirationDate = date.month + "/" + date.year;
+  return {flag, creditCardNumber, cvc, expirationDate};
 }

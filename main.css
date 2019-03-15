@@ -1,0 +1,36 @@
+body {
+  font-family: sans-serif;
+}
+
+h1 {
+  text-transform: capitalize;
+  text-align: center;
+}
+
+h2 {
+  color: lightgray;
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.description-code {
+  margin: 10px 0;
+}
+
+.code {
+  background-color: lightgray;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.identation {
+  padding-left: 10px;
+}
+
+.identation-2 {
+  padding-left: 20px;
+}

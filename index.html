@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Registration Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Functions to fill fields automatically in tests End-to-End">
+  <meta name="keywords" content="JavaScript, Tests, End-to-End">
+  <meta name="author" content="Diego Chagas">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Registration generator</h1>
+    <div class="description">
+      JavaScript functions to generate random registrations for developers that are doing test end-to-end.
+      <div class="container-code">
+        <h2>Generate brazilian CPF</h2>
+        <div class="description-code">
+          Function to generate a brazilian CPF.
+        </div>
+        <div class="code">
+          <div class="line">
+            <code>
+              function generateBrazilianCPF() {
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const number = 9;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const digits = generateDigits();
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              let digit1 = calculateFirstDigitCPF(digits);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              let digit2 = calculateSecondDigitCPF(digits, digit1);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              return printFullCPF(digits, digit1, digit2);
+            </code>
+          </div>
+            <div class="line">
+              <code>
+                }
+              </code>
+            </div>
+        </div>
+      </div>
+
+      <div class="container-code">
+        <h2>Generate brazilian CNPJ</h2>
+        <div class="description-code">
+          Function to generate a brazilian CNPJ.
+        </div>
+        <div class="code">
+          <div class="line">
+            <code>
+              function generateBrazilianCNPJ() {
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const number = 9;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const digits = generateDigits(12);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              digits[9] = 0;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              digits[10] = 0;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              digits[11] = 0;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              digits[12] = 1;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              let digit1 = calculateFirstDigitCNPJ(digits);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              let digit2 = calculateSecondDigitCNPJ(digits, digit1);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              return printFullCNPJ(digits, digit1, digit2);
+            </code>
+          </div>
+          <div class="line">
+            <code>
+              }
+            </code>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-code">
+        <h2>Generate brazilian titulo de eleitor</h2>
+        <div class="description-code">
+          Function to generate a brazilian titulo de eleitor.
+        </div>
+        <div class="code">
+          <div class="line">
+            <code>
+              function generateBrazilianTituloDeEleitor() {
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              let digits = [];
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              for(let i = 1; i <= 8; i++){
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              const n = 9;
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              digits[i] = generateRandomNumbers(n) % 9;
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              digits[9] = generateRandomNumbers(n) % 2;
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              digits[10] = generateRandomNumbers(n) % 8;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              }
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const digit1 = calculateFirstVerifyDigitTituloDeEleitor(digits);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const digit2 = calculateSecondVerifyDigitTituloDeEleitor(digits, digit1);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              return printFullTituloDeEleitor(digits, digit1, digit2);
+            </code>
+          </div>
+          <div class="line">
+            <code>
+              }
+            </code>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-code">
+        <h2>Generate name</h2>
+        <div class="description-code">
+          Function to generate names.
+        </div>
+        <div class="code">
+          <div class="line">
+            <code>
+              function nameGenerator(){
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const names = namesJSON;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const number = names.length - 1;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              const i = Math.round(Math.random() * number);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              return names[i];
+            </code>
+          </div>
+          <div class="line">
+            <code>
+              }
+            </code>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-code">
+          <h2>Generate family name</h2>
+          <div class="description-code">
+            Function to generate family names.
+          </div>
+          <div class="code">
+            <div class="line">
+              <code>
+                function familyNameGenerator(){
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                const familyNames = familyNamesJSON;
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                const i = generateRandomNumbers(familyNames.length - 1);
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                return familyNames[i];
+              </code>
+            </div>
+            <div class="line">
+              <code>
+                }
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-code">
+          <h2>Generate work segment</h2>
+          <div class="description-code">
+            Function to generate a work segment.
+          </div>
+          <div class="code">
+            <div class="line">
+              <code>
+                function generateWorkSegment(){
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                const segments = workSegmentJSON;
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                const i = generateRandomNumbers(segments.length - 1);
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                return segments[i];
+              </code>
+            </div>
+            <div class="line">
+              <code>
+                }
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-code">
+          <h2>Generate razao social</h2>
+          <div class="description-code">
+            Function to generate a razao social.
+          </div>
+          <div class="code">
+            <div class="line">
+              <code>
+                function generateRazaoSocial (name, familyName){
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                const segment = generateWorkSegment();
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                const companyName = name + " " + familyName;
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                const type = ['MEI', 'ME', 'EPP', 'EI', 'EIRELI', 'LTDA', 'SA'];
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                var i = generateRandomNumbers(type.length - 1);
+              </code>
+            </div>
+            <div class="line identation">
+              <code>
+                return companyName + " " + segment + " " + type[i];
+              </code>
+            </div>
+            <div class="line">
+              <code>
+                }
+              </code>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+  <script src="registration-generator.js"></script>
+</body>
+</html>
