@@ -792,34 +792,28 @@ function generateCellphone(){
 function getCreditCardInformations(creditCardFlag){
   let flag = "";
   let startWith = "";
-  let size = "";
-  let cvc = "";
+  let size = 16;
+  let cvc = generateRandomNumbersWithInterval(100, 999);
   switch(creditCardFlag) {
     case "visa":
       flag = "Visa";
       startWith = "4";
-      size = choseRandomOption([13, 16]);
-      cvc = generateRandomNumbersWithInterval(100, 999);
+      size = choseRandomOption([13, size]);
       break;
     case "mastercard":
     case "master":
       flag = "Mastercard";
       startWith = "5";
-      size = 16;
-      cvc = generateRandomNumbersWithInterval(100, 999);
       break;
     case "diners":
       flag = "Diners";
       startWith = choseRandomOption(['301','305','36','38']);
-      size = choseRandomOption([14,16]);
-      cvc = generateRandomNumbersWithInterval(100, 999);
+      size = choseRandomOption([14, size]);
       break;
     case "elo":
       flag = "Elo";
       startWith = choseRandomOption(['636368', '636369', '438935', '504175', '451416',
         '636297', '5067', '4576', '4011', '506699']);
-      size = 16;
-      cvc = generateRandomNumbersWithInterval(100, 999);
       break;
     case "amex":
       flag = "Amex";
@@ -830,26 +824,20 @@ function getCreditCardInformations(creditCardFlag){
     case "discover":
       flag = "Discover";
       startWith = choseRandomOption(['6011','622','64','65']);
-      size = 16;
       cvc = generateRandomNumbersWithInterval(1000, 9999);
       break;
     case "aura":
       flag = "Aura";
       startWith = '50';
-      size = 16;
-      cvc = generateRandomNumbersWithInterval(100, 999);
       break;
     case "jcb":
       flag = "jcb";
       startWith = '35';
-      size = 16;
-      cvc = generateRandomNumbersWithInterval(100, 999);
       break;
     case "hipercard":
       flag = "Hipercard";
       startWith = choseRandomOption(['38','60']);
-      size = choseRandomOption([13,16,19]);
-      cvc = generateRandomNumbersWithInterval(100, 999);
+      size = choseRandomOption([13, size, 19]);
       break;
     default:
       console.error('CreditCard flat not found!');
@@ -859,28 +847,15 @@ function getCreditCardInformations(creditCardFlag){
 }
 
 function generateCreditCardBin(startWith, digits) {
+  const startDigitsIn = startWith.length;
   let bin = "";
-  switch(sizeFirstDigits){
-    case 1:
-      bin = startWith + digits[2] + digits[3] + digits[4] + digits[5] + digits[6];
-      break;
-    case 2:
-      bin = startWith + digits[3] + digits[4] + digits[5] + digits[6];
-      break;
-    case 3:
-      bin = startWith + digits[4] + digits[5] + digits[6];
-      break;
-    case 4:
-      bin = startWith + digits[5] + digits[6];
-      break;
-    case 5:
-      bin = startWith + digits[6];
-      break;
-    case 6:
-      bin = startWith;
-      break;
-    default:
-      return `There isn't bin with ${sizeFirstDigits} characters!`;
+  if(startDigitsIn >= 1 && startDigitsIn <= 6) {
+    bin += startWith;
+    for(let i = startDigitsIn; i < 6; i++) {
+      bin += digits[i + 1];
+    }
+  } else {
+    console.error(`There isn't bin with ${startDigitsIn} characters!`);
   }
   return bin;
 }
@@ -892,7 +867,6 @@ function generateCreditCard(){
   const card = getCreditCardInformations(creditCardFlag);
 
   const digits = generateDigits(7);
-  const sizeFirstDigits = card.startWith.length;
   let bin = generateCreditCardBin(card.startWith, digits);
 
   const randomSizeNumber = size - (bin.length + 1);
