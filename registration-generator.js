@@ -65,7 +65,7 @@ function generateBrazilianCPF(hasMask = false) {
   return cpf;
 }
 
-function calculateDigit (maxMultiplier = 9, ...digits) {
+function calculateDigit (maxMultiplier, ...digits) {
   let digit = 0;
   let amountOfDigits = digits.length;
   let multiplier = 2;
@@ -85,7 +85,7 @@ function generateBrazilianCNPJ(hasMask = false) {
   digits[10] = 0;
   digits[11] = 0;
   digits[12] = 1;
-  const digit1 = calculateDigit(...digits);
+  const digit1 = calculateDigit(9, ...digits);
   const digit2 = calculateDigit(...digits, digit1);
   let cnpj = printDocument(...digits, digit1, digit2);
   if (hasMask) {
