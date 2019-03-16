@@ -26,23 +26,32 @@ function choseRandomOption(list) {
   return list[i];
 }
 
-function calculateFirstDigitCPF(numbers) {
-  let digit =  numbers[9] * 2 + numbers[8] * 3 + numbers[7] * 4 + numbers[6] * 5 + numbers[5] * 6 + numbers[7]
-    + numbers[3] * 8 + numbers[2] * 9 + numbers[1] * 10;
+function calculateDigitCPF(...digits) {
+  let digit = 0;
+  let amountOfDigits = digits.length;
+  let multiplier = 2;
+  for (let i = amountOfDigits; i >= 1; i--) {
+    digit += digits[i] * multiplier;
+    multiplier++;
+  }
   digit = 11 - (mod(digit, 11));
   return (digit < 10) ? digit : 0;
 }
 
-function calculateSecondDigitCPF(numbers, digit1) {
-  let digit2 = digit1 * 2 + number9 * 3 + number8 * 4 + number7 * 5 + number6 * 6 +
-    number5 * 7 + number4 * 8 + number3 * 9 + number2 * 10 + number1 * 11;
-  digit2 = 11 - (mod(digit2, 11));
-  return (digit2 < 10) ? digit2 : 0;
-}
-
-function printFullCPF(numbers, digit1, digit2) {
-  return '' + numbers[1] + numbers[2] + numbers[3] + '.' + numbers[4] + numbers[5] + numbers[6] +
-    '.' + numbers[7] + numbers[8] + numbers[9] + '-' + digit1 + digit2;
+function printFullCPF(hasMask, ...digits) {
+  let cpf = '';
+  cpf = digits.reduce((accumulator, digit, index) => {
+    let mask = '';
+    if(hasMask) {
+      if(index === 3 || index === 6) {
+        mask = '.';
+      } else if (index === 9) {
+        mask = '-';
+      }
+    }
+    return accumulator + digit + mask;
+  });
+  return cpf;
 }
 
 function generateDigits(amountOfDigits){
@@ -50,17 +59,29 @@ function generateDigits(amountOfDigits){
   for(let i = 1; i <= amountOfDigits; i++) {
     digits[i] = generateRandomNumbers(9);
   }
+  return digits;
 }
 
-function generateBrazilianCPF() {
-  const number = 9;
-  const digits = generateDigits();
-  let digit1 = calculateFirstDigitCPF(digits);
-  let digit2 = calculateSecondDigitCPF(digits, digit1);
-  return printFullCPF(digits, digit1, digit2);
+function generateBrazilianCPF(hasMask = false) {
+  const amountOfDigits = 9;
+  const digits = generateDigits(amountOfDigits);
+  let digit1 = calculateDigitCPF(...digits);
+  let digit2 = calculateDigitCPF(...digits, digit1);
+  let cpf = printFullCPF(hasMask, ...digits, digit1, digit2);
+  return cpf;
 }
 
-function calculateFirstDigitCNPJ (digits) {
+function calculateDigit (...digits) {
+  let digit = 0;
+  let amountOfDigits = digits.length;
+  let multiplier = 2;
+  for (let i = amountOfDigits; i >= 1; i--) {
+    if()
+    digit += digits[i] * multiplier;
+    multiplier++;
+  }
+  digit = 11 - (mod(digit, 11));
+  return (digit < 10) ? digit : 0;
   let digit1 = digits[12] * 2 + digits[11] * 3 + digits[10] * 4 + digits[9] * 5 + digits[8] * 6
     + digits[7] * 7 + digits[6] * 8 + digits[5] * 9 + digits[4] * 2 + digits[3] * 3
     + digits[2] * 4 + digits[1] * 5;
@@ -83,8 +104,8 @@ function printFullCNPJ (digits, digit1, digit2) {
 }
 
 function generateBrazilianCNPJ() {
-  const number = 9;
-  const digits = generateDigits(12);
+  const amountOfDigits = 12;
+  const digits = generateDigits(amountOfDigits);
   digits[9] = 0;
   digits[10] = 0;
   digits[11] = 0;
@@ -135,14 +156,14 @@ function generateBrazilianTituloDeEleitor() {
   return printFullTituloDeEleitor(digits, digit1, digit2);
 }
 
-function nameGenerator(){
+function generateName(){
 	const names = namesJSON;
   const number = names.length - 1;
   const i = Math.round(Math.random() * number);
 	return names[i];
 }
 
-function familyNameGenerator(){
+function generateFamilyName(){
   const familyNames = familyNamesJSON;
   const i = generateRandomNumbers(familyNames.length - 1);
 	return familyNames[i];
