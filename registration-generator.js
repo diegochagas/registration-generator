@@ -38,20 +38,10 @@ function calculateDigitCPF(...digits) {
   return (digit < 10) ? digit : 0;
 }
 
-function printFullCPF(hasMask, ...digits) {
-  let cpf = '';
-  cpf = digits.reduce((accumulator, digit, index) => {
-    let mask = '';
-    if(hasMask) {
-      if(index === 3 || index === 6) {
-        mask = '.';
-      } else if (index === 9) {
-        mask = '-';
-      }
-    }
-    return accumulator + digit + mask;
-  });
-  return cpf;
+function printDocument(...digits) {
+  let document = '';
+  document = digits.reduce((accumulator, digit) => accumulator + digit);
+  return document;
 }
 
 function generateDigits(amountOfDigits){
@@ -67,52 +57,43 @@ function generateBrazilianCPF(hasMask = false) {
   const digits = generateDigits(amountOfDigits);
   let digit1 = calculateDigitCPF(...digits);
   let digit2 = calculateDigitCPF(...digits, digit1);
-  let cpf = printFullCPF(hasMask, ...digits, digit1, digit2);
+  let cpf = printDocument(...digits, digit1, digit2);
+  if (hasMask) {
+    cpf = '' + digits[1] + digits[2] + digits[3] + '.' + digits[4] + digits[5] +
+      digits[6] + '.' + digits[7] + digits[8] + digits[9] + '-' + digit1 + digit2;
+  }
   return cpf;
 }
 
-function calculateDigit (...digits) {
+function calculateDigit (maxMultiplier = 9, ...digits) {
   let digit = 0;
   let amountOfDigits = digits.length;
   let multiplier = 2;
   for (let i = amountOfDigits; i >= 1; i--) {
-    if()
+    multiplier = multiplier > maxMultiplier ? 2 : multiplier;
     digit += digits[i] * multiplier;
     multiplier++;
   }
   digit = 11 - (mod(digit, 11));
   return (digit < 10) ? digit : 0;
-  let digit1 = digits[12] * 2 + digits[11] * 3 + digits[10] * 4 + digits[9] * 5 + digits[8] * 6
-    + digits[7] * 7 + digits[6] * 8 + digits[5] * 9 + digits[4] * 2 + digits[3] * 3
-    + digits[2] * 4 + digits[1] * 5;
-  digit1 = 11 - (mod(digit1, 11));
-  return (digit1 < 10) ? digit1 : 0;
 }
 
-function calculateSecondDigitCNPJ (digits, digit1) {
-  let digit2 = digit1 * 2 + digits[12] * 3 + digits[11] * 4 + digits[10] * 5 + digits[9] * 6 +
-    digits[8] * 7 + digits[7] * 8 + digits[6] * 9 + digits[5] * 2 + digits[4] * 3 + digits[3]* 4 +
-      digits[2] * 5 + digits[1] * 6;
-  digit2 = 11 - (mod(digit2, 11));
-  return (digit2 < 10) ? digit2 : 0;
-}
-
-function printFullCNPJ (digits, digit1, digit2) {
-  return '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] + '.' +
-    digits[6] + digits[7] + digits[8] + '/' + digits[9] + digits[10] + digits[11] +
-    digits[12] + '-'+ digit1 + digit2;
-}
-
-function generateBrazilianCNPJ() {
+function generateBrazilianCNPJ(hasMask = false) {
   const amountOfDigits = 12;
   const digits = generateDigits(amountOfDigits);
   digits[9] = 0;
   digits[10] = 0;
   digits[11] = 0;
   digits[12] = 1;
-  let digit1 = calculateFirstDigitCNPJ(digits);
-  let digit2 = calculateSecondDigitCNPJ(digits, digit1);
-  return printFullCNPJ(digits, digit1, digit2);
+  const digit1 = calculateDigit(...digits);
+  const digit2 = calculateDigit(...digits, digit1);
+  let cnpj = printDocument(...digits, digit1, digit2);
+  if (hasMask) {
+    cnpj = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] + '.' +
+      digits[6] + digits[7] + digits[8] + '/' + digits[9] + digits[10] + digits[11] +
+      digits[12] + '-'+ digit1 + digit2;
+  }
+  return cnpj;
 }
 
 function calculateFirstVerifyDigitTituloDeEleitor(digits){
@@ -132,18 +113,7 @@ function calculateSecondVerifyDigitTituloDeEleitor(digits, digit1) {
   return (digit2 <= 9) ? digit2 : 0;
 }
 
-function printFullTituloDeEleitor(digit1, digit2, numbers){
-  let title = "";
-  for(let i = 1; i <= 10; i++){
-    title += numbers[i];
-    if(i % 4 == 0)
-      title += " ";
-  }
-  title += digit1 + digit2;
-  return title;
-}
-
-function generateBrazilianTituloDeEleitor() {
+function generateBrazilianTituloDeEleitor(hasMask = false) {
   let digits = [];
   for(let i = 1; i <= 8; i++){
     const n = 9;
@@ -153,7 +123,18 @@ function generateBrazilianTituloDeEleitor() {
   }
   const digit1 = calculateFirstVerifyDigitTituloDeEleitor(digits);
   const digit2 = calculateSecondVerifyDigitTituloDeEleitor(digits, digit1);
-  return printFullTituloDeEleitor(digits, digit1, digit2);
+  let tituloDeEleitor = printDocument(...digits, digit1, digit2);
+  if (hasMask) {
+    tituloDeEleitor = '';
+    for(let i = 1; i <= 10; i++){
+      tituloDeEleitor += numbers[i];
+      if(i % 4 == 0) {
+        tituloDeEleitor += " ";
+      }
+    }
+    tituloDeEleitor += digit1 + digit2;
+  }
+  return tituloDeEleitor;
 }
 
 function generateName(){
@@ -183,46 +164,26 @@ function generateRazaoSocial (name, familyName){
 	return companyName + " " + segment + " " + type[i];
 }
 
-function printFullInscricaoEstadual(...digits) {
-  let inscricaoEstadual = '';
-  for(let i = 1; i <= digits.length - 1; i++) {
-    inscricaoEstadual += digits[i];
-  }
-  return inscricaoEstadual;
-}
-
 function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false) {
   const states = brazilianStatesJSON.acronyms;
   states.push('SSP');
   const randomIndex = generateRandomNumbers(states.length - 1);
   const companyState = states[randomIndex];
-  const digits = [];
+  let digits = [];
+  let digit1 = '';
+  let digit2 = '';
   switch(companyState) {
     case 'AC':
       digits = generateDigits(9);
-
       digits[1] = 0;
       digits[2] = 1;
-
-      let digit1 = digits[11] * 2 + digits[10] * 3 + digits[9] * 4 + digits[8] * 5 + digits[7] * 6 +
-        digits[6] * 7 + digits[5] * 8 + digits[4] * 9 + digits[3] * 2 +
-        digits[2] * 3 + digits[1] * 4;
-      digit1 = 11 - (mod(digit1, 11));
-      digit1 = (digit1 < 10) ? digit1 : 0;
-
-      let digit2 = digit1 * 2 + numbers[11] * 3 + numbers[10] * 4 + numbers[9] * 5 +
-        numbers[8] * 6 + numbers[7] * 7 + numbers[6] * 8 + numbers[5] * 9 + numbers[4] * 2 +
-        numbers[3] * 3 + numbers[2] * 4 + numbers[1] * 5;
-      digit2 = 11 - (mod(digit2, 11));
-      digit2 = (digit2 < 10) ? digit2 : 0;
-
+      digit1 = calculateDigit(...digits);
+      digit2 = calculateDigit(digit1, ...digits);
+      inscricaoEstadual = printDocument(...digits, digit1, digit2);
       if (hasMask) {
           inscricaoEstadual =  '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] +
           digits[5] + '.' + digits[6] + digits[7] + digits[8] + '.' + digits[9] + digits[10] +
           digits[11] + '-' + digit1 + digit2;
-      }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit1, digit2);
       }
       break;
     case 'AL':
@@ -241,232 +202,124 @@ function generateInscricaoEstadual(inscricaoEstadual = 'Isento', hasMask = false
       else if(digits[3] == 4) {
         digits[3] = 8;
       }
-      let digit1 = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-        digit = 0;
-      }
-      inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       break;
     case 'AP':
       digits = generateDigits(8);
       digits[1]  = 0;
       digits[2]  = 3;
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-          digit = 0;
-      }
-      inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       break;
     case 'AM':
       digits = generateDigits(8);
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-          digit = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] +
-          '.' + digits[6] + digits[7] + digits[8] + '-' + digit;
-      }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+        inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] +
+          digits[5] + '.' + digits[6] + digits[7] + digits[8] + '-' + digit1;
       }
       break;
     case 'BA':
       digits = generateDigits(6);
-      let digit1 = digits[6] * 2 + digits[5] * 3 + digits[4] * 4 + digits[3] * 5 +
-        digits[2] * 6 + digits[1] * 7;
-      digit1 = 11 - (mod(digit1, 11));
-      if (digit1>=10) digit1 = 0;
-      let digit2 = digit1 * 2 + digits[6] * 3 + digits[5] * 4 + digits[4] * 5 + digits[3] * 6 +
-        digits[2] * 7 + digits[1] * 8 ;
-      digit2 = 11 - (mod(digit2, 11));
-      if (digit2>=10) digit2 = 0;
+      digit1 = calculateDigit(...digits);
+      digit2 = calculateDigit(digit1, ...digits);
+      inscricaoEstadual = printDocument(...digits, digit1, digit2);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
           digits[6] + '-' + digit1 + digit2;
       }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit1, digit2);
-      }
       break;
     case 'CE':
       digits = generateDigits(8);
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-        digit = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
-          digits[6] + digits[7] + digits[8] + '-' + digit;
-      }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+          digits[6] + digits[7] + digits[8] + '-' + digit1;
       }
       break;
     case 'DF':
       digits = generateDigits(11);
       digits[1] = 0;
       digits[2] = 7;
-      let digit1 = digits[11] * 2 + digits[10] * 3+ digits[9] * 4 + digits[8] * 5 + digits[7] * 6 +
-        digits[6] * 7 + digits[5] * 8 + digits[4] * 9 +digits[3] * 2 +digits[2] * 3 +digits[1] * 4;
-      digit1 = 11 - (mod(digit1, 11));
-      if (digit1 >= 10) {
-        digit1 = 0;
-      }
-      let digit2 = digit1 * 2 + digits[11] * 3 + digits[10] * 4 + digits[9] * 5 + digits[8] * 6 +
-        digits[7] * 7 + digits[6] * 8 + digits[5] * 9 + digits[4] * 2 + digits[3] * 3 +
-        digits[2] * 4 + digits[1] * 5;
-      digit2 = 11 - (mod(digit2, 11));
-      if (digit2>=10){
-        digit2 = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      digit2 = calculateDigit(digit1, ...digits);
+      inscricaoEstadual = printDocument(...digits, digit1, digit2);
       if (hasMask) {
-        inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] +
-          '.' + digits[6] + digits[7] + digits[8] + '.' + digits[9] + digits[10] + digits[11] +
-          '-' + digit1 + digit2;
-      }
-      else {
-          inscricaoEstadual = printFullInscricaoEstadual(...digits, digit1, digit2);
+        inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] +
+          digits[5] + '.' + digits[6] + digits[7] + digits[8] + '.' + digits[9] +
+          digits[10] + digits[11] + '-' + digit1 + digit2;
       }
       break;
     case 'ES':
       digits = generateDigits(8);
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit2 = mod(digit1, 11);
-      digit2 = 11 - (mod(digit1, 11));
-      if (digit2 >= 10) {
-        digit2 = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
-          digits[6] + digits[7] + digits[8] + '-' + digit;
-      }
-      else {
-          inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+          digits[6] + digits[7] + digits[8] + '-' + digit1;
       }
       break;
     case 'GO':
       digits = generateDigits(8);
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit1, 11);
-      digit = 11 - (mod(digit1, 11));
-      if (digit >= 10) {
-        digit = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] +
-          '.' + digits[6] + digits[7] + digits[8] + '-' + digit;
-      }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+          '.' + digits[6] + digits[7] + digits[8] + '-' + digit1;
       }
       break;
     case 'MA':
       digits = generateDigits(8);
       digits[1] = 1;
       digits[2] = 2;
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-        digit = 0;
-      }
-      inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       break;
     case 'MS':
       digits = generateDigits(10);
-      let digit = digits[10] * 2 + digits[9] * 3 + digits[8] * 4 + digits[7] * 5 + digits[6] * 6 +
-        digits[5] * 7 + digits[4] * 8 + digits[3] * 9 + digits[2] * 2 + digits[1] * 3;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-        digit = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
-          digits[6] + digits[7] + digits[8] + digits[9] + digits[10] + '-' + digit;
-      }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+          digits[6] + digits[7] + digits[8] + digits[9] + digits[10] + '-' + digit1;
       }
       break;
     case 'MT':
       digits = generateDigits(10);
-      let digit = digits[10] * 2 + digits[9] * 3 + digits[8] * 4 + digits[7] * 5 + digits[6] * 6 +
-        digits[5] * 7 + digits[4] * 8 + digits[3] * 9 + digits[2] * 2 + digits[1] * 3;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit2 >= 10) {
-        digit2 = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
-          digits[6] + digits[7] + digits[8] + digits[9] + digits[10] + '-' + digit;
-      }
-      else {
-          inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+          digits[6] + digits[7] + digits[8] + digits[9] + digits[10] + '-' + digit1;
       }
       break;
     case 'MG':
       break;
     case 'PA':
       digits = generateDigits(8);
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-        digit = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
-          digits[6] + digits[7] + digits[8] + '-' + digit;
-      }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+          digits[6] + digits[7] + digits[8] + '-' + digit1;
       }
       break;
     case 'PB':
       digits = generateDigits(8);
-      let digit = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit = mod(digit, 11);
-      digit = 11 - (mod(digit, 11));
-      if (digit >= 10) {
-        digit = 0;
-      }
+      digit1 = calculateDigit(...digits);
+      inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
         inscricaoEstadual = '' + digits[1] + digits[2] + digits[3] + digits[4] + digits[5] +
-          digits[6] + digits[7] + digits[8] + '-' + digit;
-      }
-      else {
-        inscricaoEstadual = printFullInscricaoEstadual(...digits, digit);
+          digits[6] + digits[7] + digits[8] + '-' + digit1;
       }
       break;
     case 'PR':
-      const digits = generateDigits(8);
-      let digit1 = digits[8] * 2 + digits[7] * 3 + digits[6] * 4 + digits[5] * 5 + digits[4] * 6 +
-        digits[3] * 7 + digits[2] * 8 + digits[1] * 9;
-      digit1 = 11 - (mod(digit1, 11));
-      if (digit1 >= 10){
-        digit1 = 0;
-      }
-      let digit2 = digit1*2 + digits[8] * 3 + digits[7] * 4 + digits[6] * 5 + digits[5] * 6 +
+      digits = generateDigits(8);
+      digit1 = calculateDigit(...digits);
+      digit2 = digit1*2 + digits[8] * 3 + digits[7] * 4 + digits[6] * 5 + digits[5] * 6 +
         digits[4] * 7 + digits[3] * 2 + digits[2] * 3 + digits[1] * 4;
       digit2 = 11 - (mod(digit2, 11));
       if (digit2 >= 10) {
