@@ -1,3 +1,7 @@
+/**
+ * The content of a few functions are saved here as arrays to make easy to use this library
+ * with only one file.
+*/
 const namesJSON = ["João", "José", "Allison", "Arthur", "Ana", "Alex", "Arlene", "Alberto", "Barry", "Bertha", "Bill", "Bonnie", "Bret", "Beryl", "Chantal", "Cristobal", "Claudette", "Charley", "Cindy", "Chris", "Dean", "Dolly", "Danny", "Danielle", "Dennis", "Debby", "Erin", "Edouard", "Erika", "Earl", "Emily", "Ernesto", "Felix", "Fay", "Fabian", "Frances", "Franklin", "Florence", "Gabielle", "Gustavo", "Grace", "Gaston", "Gert", "Gordon", "Humberto", "Hanna", "Henri", "Hermine", "Harvey", "Helene", "Iris", "Isidore", "Isabel", "Ivan", "Irene", "Isaac", "Jerry", "Josephine", "Juan", "Jeanne", "Jose", "Joyce", "Karen", "Kyle", "Kate", "Karl", "Katrina", "Kirk", "Lorenzo", "Lili", "Larry", "Lisa", "Lee", "Leslie", "Michelle", "Marco", "Mindy", "Maria", "Michael", "Noel", "Nana", "Nicholas", "Nicole", "Nate", "Nadine", "Olga", "Omar", "Odette", "Otto", "Ophelia", "Oscar", "Pablo", "Paloma", "Peter", "Paula", "Philippe", "Patty", "Rebekah", "Rene", "Rose", "Richard", "Rita", "Rafael", "Sebastien", "Sally", "Sam", "Shary", "Stan", "Sandy", "Tanya", "Teddy", "Teresa", "Tomas", "Tammy", "Tony", "Van", "Vicky", "Victor", "Virginie", "Vince", "Valerie", "Wendy", "Wilfred", "Wanda", "Walter", "Wilma", "William", "Kumiko", "Aki", "Miharu", "Chiaki", "Michiyo", "Itoe", "Nanaho", "Reina", "Emi", "Yumi", "Ayumi", "Kaori", "Sayuri", "Rie", "Miyuki", "Hitomi", "Naoko", "Miwa", "Etsuko", "Akane", "Kazuko", "Miyako", "Youko", "Sachiko", "Mieko", "Toshie", "Junko", "Silva", "Ash", "Jalmir", "Rafael", "Bruno", "Daniel", "Mariane", "Andre", "Diego"];
 const familyNamesJSON = ["Cardoso", "Chagas", "Fernandes", "Santana", "Carvalho", "Martins", "Santos", "Boaventura", "Oliveira", "Moraes", "Leão", "Garcia", "Alves", "Costa", "Oliveira", "Martinez", "Novaes", "Oliveira", "Araújo", "Maia", "Vasconcelos", "Gonçalves", "Guimarães", "Menezes", "Sampaio", "Cavalcante", "Lacerda", "Mello", "Moraes", "Muniz", "Figueira", "Paes", "Lima", "Marques", "Duarte", "Vasconcelos", "Vieira", "Souza", "Soares", "Silva", "Duarte", "Morais", "Gomes", "Paiva", "Junqueira", "Queiroz", "Barreto", "Menezzes", "Campos", "Pilar", "Chaves", "Paris", "Lessa", "Galisteu", "Garcia", "Frota", "Araújo", "Xavier", "Ribeiro", "Rodrigues", "Freitas", "Pinheiro", "Moreira", "Dias", "Guimarães", "Nogueira", "Rocha", "Albuquerque", "Neves", "Bernardes", "Pereira", "Camargo", "Alencar", "Batista", "Andrade ", "Reis", "Amaral", "Barcellos", "Monteiro", "Barreto", "Frias", "Medeiros", "Gonçalves", "Ferrari", "Mesquita"];
 const workSegmentJSON = ["Agência De Publicidade", "Alimentos", "Artigos Esportivos", "Autopeças", "Auditoria", "Consultoria", "Bancos De Varejo", "Bebidas Alcoólicas", "Bebidas Não-Alcoólicas", "Calçados", "Cartão De Crédito", "Cia Aérea", "Construção E Incorporação", "Construção Pesada", "Derivado De Petróleo", "Eletrodomésticos", "Eletroeletrônicos", "Equipamento De Telecomunicação", "Fabricante De Material De Construção", "Farmacêutico", "Fast Food", "Fiação E Tecelagem", "Fornecedores De Energia", "Hardware", "Higiene E Limpeza Doméstica", "Higiene Pessoal, Perfumaria E Cosméticos", "Logística", "Metalurgia E Siderurgia", "Montadora/Importadora De Automóveis", "Montadora/Importadora De Caminhões", "Operadora De Telefonia Fixa", "Operadora De Telefonia Móvel", "Papel E Celulose", "Petroquímica", "Previdência Privada", "Provedor De Internet", "Química", "Rede De Hotéis", "Varejo Eletroeletrônicos", "Varejo Material De Construção", "Varejo Supermercados", "Varejo Têxtil", "Seguradoras", "Software", "Vestuário E Confecção", "Contact Center", "Redes Sociais", "Mineração"];
@@ -8,6 +12,14 @@ const internetProvidersJSON = ["gmail.com", "yahoo.com.br", "bol.com.br", "msn.c
 const charactersJSON = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "V", "W", "X", "Y", "Z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "`", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "{", "]", "}", "\"", "|", ";", ":", "'", "\"", "<", ".", ">", "/", "?"];
 const RGsJSON = ["911225341", "91.122.534-1", "403289440", "4.032.894-40", "418757896", "41.875.789-6", "2977269", "2.977.269", "429434121", "42.943.412-1"];
 const creditCardFlagsJSON = ["visa", "mastercard", "master", "diners", "elo", "amex", "discover", "aura", "jcb", "hipercard"];
+
+/**
+ * Most of the functions that generate documents are made in the pattern that you can only
+ * call the function, and generate a sequence of numbers as strings, or you can generate a
+ * document with a mask (dots or slash between the values), inserting the value 'true' in
+ * the function call, like 'example(true)'. Demonstrations of the returns of all functions
+ * are showed on the page https://diegochagas.github.io/registration-generator .
+ */
 
 function generateRandomNumbers(maximumNumber) {
   let randomNumber = Math.round(Math.random() * maximumNumber);
@@ -58,8 +70,8 @@ function printDocument(...digits) {
 
 function generateBrazilianCPF(hasMask = false) {
   const digits = generateDigits(9);
-  let digit1 = calculateDigit(10, ...digits);
-  let digit2 = calculateDigit(11, digit1, ...digits);
+  const digit1 = calculateDigit(10, ...digits);
+  const digit2 = calculateDigit(11, digit1, ...digits);
   let cpf = printDocument(...digits, digit1, digit2);
   if (hasMask) {
     cpf = '' + digits[1] + digits[2] + digits[3] + '.' + digits[4] + digits[5] +
@@ -69,8 +81,7 @@ function generateBrazilianCPF(hasMask = false) {
 }
 
 function generateBrazilianCNPJ(hasMask = false) {
-  const amountOfDigits = 12;
-  const digits = generateDigits(amountOfDigits);
+  const digits = generateDigits(12);
   digits[9] = 0;
   digits[10] = 0;
   digits[11] = 0;
@@ -87,29 +98,28 @@ function generateBrazilianCNPJ(hasMask = false) {
 }
 
 function calculateFirstVerifyDigitTituloDeEleitor(digits){
-  const sum1 = ((digits[1] * 2) + (digits[2] * 3) + (digits[3] * 4) + (digits[4] * 5) +
+  const sum = ((digits[1] * 2) + (digits[2] * 3) + (digits[3] * 4) + (digits[4] * 5) +
     (digits[5] * 6) + (digits[6] * 7) + (digits[7] * 8) + (digits[8] * 9));
-  const part1 = parseInt((sum1 / 11));
+  const part1 = parseInt((sum / 11));
   const part2 = (part1 * 11);
-  let digit1 = (sum1 - part2);
+  let digit1 = (sum - part2);
   return (digit1 <= 9) ? digit1 : 0;
 }
 
 function calculateSecondVerifyDigitTituloDeEleitor(digits, digit1) {
-  const sum2 = ((digits[9] * 7) + (digits[10] * 8) + (digit1 * 9));
-  const part3 = parseInt(sum2 / 11);
+  const sum = ((digits[9] * 7) + (digits[10] * 8) + (digit1 * 9));
+  const part3 = parseInt(sum / 11);
   const part4 = (part3 * 11);
-  let digit2 = (sum2  - part4);
+  let digit2 = (sum  - part4);
   return (digit2 <= 9) ? digit2 : 0;
 }
 
 function generateBrazilianTituloDeEleitor(hasMask = false) {
   let digits = [];
   for(let i = 1; i <= 8; i++){
-    const n = 9;
-    digits[i] = generateRandomNumbers(n) % 9;
-    digits[9] = generateRandomNumbers(n) % 2;
-    digits[10] = generateRandomNumbers(n) % 8;
+    digits[i] = generateRandomNumbers(9) % 9;
+    digits[9] = generateRandomNumbers(9) % 2;
+    digits[10] = generateRandomNumbers(9) % 8;
   }
   const digit1 = calculateFirstVerifyDigitTituloDeEleitor(digits);
   const digit2 = calculateSecondVerifyDigitTituloDeEleitor(digits, digit1);
@@ -117,27 +127,17 @@ function generateBrazilianTituloDeEleitor(hasMask = false) {
   if (hasMask) {
     tituloDeEleitor = '';
     for(let i = 1; i <= 10; i++){
-      tituloDeEleitor += numbers[i];
-      if(i % 4 == 0) {
-        tituloDeEleitor += " ";
-      }
+      tituloDeEleitor += (i % 4 == 0) ? (digits[i] + " ") : digits[i];
     }
     tituloDeEleitor += digit1 + digit2;
   }
   return tituloDeEleitor;
 }
 
-function generateName(){
-	const names = namesJSON;
-  const number = names.length - 1;
-  const i = Math.round(Math.random() * number);
-	return names[i];
-}
+let generateName = () => choseRandomOption(namesJSON);
 
 function generateFamilyName(){
-  const familyNames = familyNamesJSON;
-  const i = generateRandomNumbers(familyNames.length - 1);
-	return familyNames[i];
+	return choseRandomOption(familyNamesJSON);
 }
 
 function generateWorkSegment(){

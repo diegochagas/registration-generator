@@ -14,110 +14,45 @@
   <div class="container">
     <h1>Registration generator</h1>
     <div class="description">
-      JavaScript functions to generate random registrations for developers that are doing test end-to-end.
+      JavaScript functions to generate random registrations for developers that are doing test end-to-end with Selenium or other frameworks.
       <div class="container-code">
         <h2>Generate brazilian CPF</h2>
         <div class="description-code">
-          Function to generate a brazilian CPF.
+          Function to generate a brazilian CPF ('Cadastro de Pessoa Física' or 'Individual Registration in English').
         </div>
         <div class="code">
-          <div class="line">
-            <code>
-              function generateBrazilianCPF() {
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const digits = generateDigits(9);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              let digit1 = calculateFirstDigitCPF(digits);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              let digit2 = calculateSecondDigitCPF(digits, digit1);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              return printFullCPF(digits, digit1, digit2);
-            </code>
-          </div>
-            <div class="line">
-              <code>
-                }
-              </code>
-            </div>
+          <code>
+            generateBrazilianCPF() = "00000000000"
+          </code>
+        </div>
+        <div class="description-code">
+            with mask
+        </div>
+        <div class="code">
+          <code>
+            generateBrazilianCPF(true) = "000.000.000-00"
+          </code>
         </div>
       </div>
-
       <div class="container-code">
         <h2>Generate brazilian CNPJ</h2>
         <div class="description-code">
-          Function to generate a brazilian CNPJ.
+          Function to generate a brazilian CNPJ ('Cadastro Nacional de Pessoa Jurídica' or National Register of Legal Entities in English).
         </div>
         <div class="code">
-          <div class="line">
-            <code>
-              function generateBrazilianCNPJ() {
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const number = 9;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const digits = generateDigits(12);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              digits[9] = 0;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              digits[10] = 0;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              digits[11] = 0;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              digits[12] = 1;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              let digit1 = calculateFirstDigitCNPJ(digits);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              let digit2 = calculateSecondDigitCNPJ(digits, digit1);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              return printFullCNPJ(digits, digit1, digit2);
-            </code>
-          </div>
-          <div class="line">
-            <code>
-              }
-            </code>
-          </div>
+          <code>
+            generateBrazilianCNPJ() = "00000000000100"
+          </code>
+        </div>
+        <div class="description-code">
+          with mask
+        </div>
+        <div class="code">
+          <code>
+              generateBrazilianCNPJ(true) = "00.000.000/0001-00"
+          </code>
         </div>
       </div>
-
       <div class="container-code">
         <h2>Generate brazilian titulo de eleitor</h2>
         <div class="description-code">
@@ -126,7 +61,7 @@
         <div class="code">
           <div class="line">
             <code>
-              function generateBrazilianTituloDeEleitor() {
+              function generateBrazilianTituloDeEleitor(hasMask = false) {
             </code>
           </div>
           <div class="line identation">
@@ -141,22 +76,17 @@
           </div>
           <div class="line identation-2">
             <code>
-              const n = 9;
+              digits[i] = generateRandomNumbers(9) % 9;
             </code>
           </div>
           <div class="line identation-2">
             <code>
-              digits[i] = generateRandomNumbers(n) % 9;
+              digits[9] = generateRandomNumbers(9) % 2;
             </code>
           </div>
           <div class="line identation-2">
             <code>
-              digits[9] = generateRandomNumbers(n) % 2;
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              digits[10] = generateRandomNumbers(n) % 8;
+              digits[10] = generateRandomNumbers(9)
             </code>
           </div>
           <div class="line identation">
@@ -176,7 +106,47 @@
           </div>
           <div class="line identation">
             <code>
-              return printFullTituloDeEleitor(digits, digit1, digit2);
+              let tituloDeEleitor = printDocument(...digits, digit1, digit2);
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              if (hasMask) {
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              tituloDeEleitor = '';
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              for(let i = 1; i <= 10; i++){
+            </code>
+          </div>
+          <div class="line identation-3">
+            <code>
+              tituloDeEleitor += (i % 4 == 0) ? (digits[i] + " ") : digits[i];
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              }
+            </code>
+          </div>
+          <div class="line identation-2">
+            <code>
+              tituloDeEleitor += digit1 + digit2;
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              }
+            </code>
+          </div>
+          <div class="line identation">
+            <code>
+              return tituloDeEleitor;
             </code>
           </div>
           <div class="line">
