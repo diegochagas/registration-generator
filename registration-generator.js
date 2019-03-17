@@ -50,15 +50,16 @@ function calculateDigit (maxMultiplier, ...digits) {
 
 function printDocument(...digits) {
   let document = '';
-  document = digits.reduce((accumulator, digit) => accumulator + digit);
+  for(let i = 1; i < digits.length; i++) {
+    document += digits[i];
+  }
   return document;
 }
 
 function generateBrazilianCPF(hasMask = false) {
-  const amountOfDigits = 9;
-  const digits = generateDigits(amountOfDigits);
+  const digits = generateDigits(9);
   let digit1 = calculateDigit(10, ...digits);
-  let digit2 = calculateDigitCPF(11, digit1, ...digits);
+  let digit2 = calculateDigit(11, digit1, ...digits);
   let cpf = printDocument(...digits, digit1, digit2);
   if (hasMask) {
     cpf = '' + digits[1] + digits[2] + digits[3] + '.' + digits[4] + digits[5] +
@@ -447,7 +448,7 @@ function generateExpirationDate(){
     return generateDate(minYear, maxYear);
 }
 
-function getTotalOfDaysOfAMonth(month){
+function getTotalOfDaysOfAMonth(month, year){
   let totalOfDays = 0;
   let isMonthWith31Days = (month === 01) || (month === 03) || (month === 05) || (month === 07) ||
     (month === 08) || (month === 10) || (month === 12);
@@ -474,7 +475,7 @@ function generateDate(minYear, maxYear){
   let year = Math.floor(Math.random() * (maxYear - minYear + 1)) + minYear;
   let month = generateRandomNumbers(11) + 1;
   let day = 1;
-  day = generateRandomNumbers(getTotalOfDaysOfAMonth(month)) + 1;
+  day = generateRandomNumbers(getTotalOfDaysOfAMonth(month, year)) + 1;
   if (day < 10) {
     day = "0" + day;
   }
@@ -665,9 +666,9 @@ function printFullCreditCardNumber(card){
 
 function generateCreditCard(){
   const creditCardFlags = creditCardFlagsJSON;
-  const totalOfCreditCards = creditCardFlags.length - 1;
-  const creditCardFlag = generateRandomNumbers(totalOfCreditCards);
+  const creditCardFlag = choseRandomOption(creditCardFlags);
   const card = selectCreditCardInformations(creditCardFlag);
+  const flag = card.flag;
   const creditCardNumber = printFullCreditCardNumber(card);
   const CVC = card.CVC;
   let date = generateDate(2018, 2026);
