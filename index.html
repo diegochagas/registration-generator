@@ -56,291 +56,267 @@
       <div class="container-code">
         <h2>Generate brazilian titulo de eleitor</h2>
         <div class="description-code">
-          Function to generate a brazilian titulo de eleitor.
+          Function to generate a brazilian titulo de eleitor (Voter's title in English).
         </div>
         <div class="code">
-          <div class="line">
-            <code>
-              function generateBrazilianTituloDeEleitor(hasMask = false) {
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              let digits = [];
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              for(let i = 1; i <= 8; i++){
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              digits[i] = generateRandomNumbers(9) % 9;
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              digits[9] = generateRandomNumbers(9) % 2;
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              digits[10] = generateRandomNumbers(9)
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              }
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const digit1 = calculateFirstVerifyDigitTituloDeEleitor(digits);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const digit2 = calculateSecondVerifyDigitTituloDeEleitor(digits, digit1);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              let tituloDeEleitor = printDocument(...digits, digit1, digit2);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              if (hasMask) {
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              tituloDeEleitor = '';
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              for(let i = 1; i <= 10; i++){
-            </code>
-          </div>
-          <div class="line identation-3">
-            <code>
-              tituloDeEleitor += (i % 4 == 0) ? (digits[i] + " ") : digits[i];
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              }
-            </code>
-          </div>
-          <div class="line identation-2">
-            <code>
-              tituloDeEleitor += digit1 + digit2;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              }
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              return tituloDeEleitor;
-            </code>
-          </div>
-          <div class="line">
-            <code>
-              }
-            </code>
-          </div>
+          <code>
+              generateBrazilianTituloDeEleitor() = "000000000000"
+          </code>
+        </div>
+        <div class="description-code">
+          with mask
+        </div>
+        <div class="code">
+          <code>
+              generateBrazilianTituloDeEleitor(true) = "0000 0000 0000"
+          </code>
         </div>
       </div>
-
       <div class="container-code">
         <h2>Generate name</h2>
         <div class="description-code">
           Function to generate names.
         </div>
         <div class="code">
-          <div class="line">
-            <code>
-              function nameGenerator(){
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const names = namesJSON;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const number = names.length - 1;
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              const i = Math.round(Math.random() * number);
-            </code>
-          </div>
-          <div class="line identation">
-            <code>
-              return names[i];
-            </code>
-          </div>
-          <div class="line">
-            <code>
-              }
-            </code>
-          </div>
+          <code>
+            generateName() = "John"
+          </code>
         </div>
       </div>
-
       <div class="container-code">
-          <h2>Generate family name</h2>
-          <div class="description-code">
-            Function to generate family names.
-          </div>
-          <div class="code">
-            <div class="line">
-              <code>
-                function familyNameGenerator(){
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const familyNames = familyNamesJSON;
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const i = generateRandomNumbers(familyNames.length - 1);
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                return familyNames[i];
-              </code>
-            </div>
-            <div class="line">
-              <code>
-                }
-              </code>
-            </div>
-          </div>
+        <h2>Generate family name</h2>
+        <div class="description-code">
+          Function to generate family names.
         </div>
-
-        <div class="container-code">
-          <h2>Generate work segment</h2>
-          <div class="description-code">
-            Function to generate a work segment.
-          </div>
-          <div class="code">
-            <div class="line">
-              <code>
-                function generateWorkSegment(){
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const segments = workSegmentJSON;
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const i = generateRandomNumbers(segments.length - 1);
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                return segments[i];
-              </code>
-            </div>
-            <div class="line">
-              <code>
-                }
-              </code>
-            </div>
-          </div>
+        <div class="code">
+          <code>
+            generateFamilyName() = "Smith"
+          </code>
         </div>
-
-        <div class="container-code">
-          <h2>Generate razao social</h2>
-          <div class="description-code">
-            Function to generate a razao social.
-          </div>
-          <div class="code">
-            <div class="line">
-              <code>
-                function generateRazaoSocial (name, familyName){
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const segment = generateWorkSegment();
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const companyName = name + " " + familyName;
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const type = ['MEI', 'ME', 'EPP', 'EI', 'EIRELI', 'LTDA', 'SA'];
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                var i = generateRandomNumbers(type.length - 1);
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                return companyName + " " + segment + " " + type[i];
-              </code>
-            </div>
-            <div class="line">
-              <code>
-                }
-              </code>
-            </div>
-          </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate work segment</h2>
+        <div class="description-code">
+          Function to generate a work segment. The segments are in Portuguese.
         </div>
-        <div class="container-code">
-          <h2>Generate work segment</h2>
-          <div class="description-code">
-            Function to generate a work segment.
-          </div>
-          <div class="code">
-            <div class="line">
-              <code>
-                function generateWorkSegment(){
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const segments = workSegmentJSON;
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                const i = generateRandomNumbers(segments.length - 1);
-              </code>
-            </div>
-            <div class="line identation">
-              <code>
-                return segments[i];
-              </code>
-            </div>
-            <div class="line">
-              <code>
-                }
-              </code>
-            </div>
-          </div>
+        <div class="code">
+          <code>
+              generateWorkSegment() = "Development"
+          </code>
         </div>
-
+      </div>
+      <div class="container-code">
+        <h2>Generate razão social</h2>
+        <div class="description-code">
+          Function to generate the razão social (business name in English). The names are in Portuguese.
+        </div>
+        <div class="code">
+          <code>
+              generateRazaoSocial() = "Example FullName and Work Segment ME"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate brazilian Inscrição Estadual</h2>
+        <div class="description-code">
+          Function to generate a brazilian Inscrição Estadual (state registration of a company in English).
+        </div>
+        <div class="code">
+          <code>
+            generateInscricaoEstadual() = "000000000000"
+          </code>
+        </div>
+        <div class="description-code">
+          with mask
+        </div>
+        <div class="code">
+          <code>
+            generateInscricaoEstadual(true) = "00.000.000-0"
+          </code>
+        </div>
+        <div class="description-code">
+          This function can generate too the result 'Isento', that means the company is free os taxs.
+        </div>
+        <div class="code">
+          <code>
+            generateInscricaoEstadual() = "Isento"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate date</h2>
+        <div class="description-code">
+          Function to generate a object containing date informations. By default the function return a date between 1900 and the actual year.
+        </div>
+        <div class="code">
+          <code>
+            generateDate() = {day: "00", month: "00", year: 0000, date: "00000000", dateWithMask: "00/00/0000"}
+          </code>
+        </div>
+        <div class="description-code">
+          You can specify a start year.
+        </div>
+        <div class="code">
+          <code>
+            generateDate(2017) = {day: "00", month: "00", year: 2019, date: "00002019", dateWithMask: "00/00/2019"}
+          </code>
+        </div>
+        <div class="description-code">
+          And an end year.
+        </div>
+        <div class="code">
+          <code>
+            generateDate(2017, 2018) = {day: "00", month: "00", year: 2018, date: "00002018", dateWithMask: "00/00/2018"}
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate company website</h2>
+        <div class="description-code">
+          Function to generate the company website.
+        </div>
+        <div class="code">
+          <code>
+            generateCompanyWebsite() = "www.example.com.br"
+          </code>
+        </div>
+        <div class="description-code">
+          You can specify wether is not a brazilian website.
+        </div>
+        <div class="code">
+          <code>
+            generateCompanyWebsite(false) = "www.example.com"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate CEP</h2>
+        <div class="description-code">
+          Function to generate an object containig information about the CEP ('Código de Endereçamento Postal', or ZIP code in English). The zip codes are from Brazil. In the object, you can select the whole code, or you can select the separeted infroamtions as local and identifier.
+        </div>
+        <div class="code">
+          <code>
+            generateCEP() = {fullCEP: "00000000", local: "00000", identifier: "000"}
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate address complement</h2>
+        <div class="description-code">
+          Function to generate an address complement. The complements are in Portuguese.
+        </div>
+        <div class="code">
+          <code>
+            generateAddressComplement() = "House A"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate email</h2>
+        <div class="description-code">
+          Function to generate an email.
+        </div>
+        <div class="code">
+          <code>
+            generateEmail() = "example@example.com.br"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate company email</h2>
+        <div class="description-code">
+          Function to generate the company email.
+        </div>
+        <div class="code">
+          <code>
+            generateCompanyEmail() = "example@example.com.br"
+          </code>
+        </div>
+        <div class="description-code">
+          You can specify wether is not a brazilian email.
+        </div>
+        <div class="code">
+          <code>
+            generateCompanyEmail(false) = "example@example.com"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate password</h2>
+        <div class="description-code">
+          Function to generate a password.
+        </div>
+        <div class="code">
+          <code>
+            generatePassword() = "1bcdef78"
+          </code>
+        </div>
+        <div class="description-code">
+          By default this function generates a password with 8 characteres, but you can define a specific number.
+        </div>
+        <div class="code">
+          <code>
+            generatePassword(6) = "1bcde6"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate brazilian RG</h2>
+        <div class="description-code">
+          Function to generate a brazilian RG ('Registro Geral' or General Registration in English).
+        </div>
+        <div class="code">
+          <code>
+              generateRG() = "000000000"
+          </code>
+        </div>
+        <div class="description-code">
+            with mask
+        </div>
+        <div class="code">
+          <code>
+            generateRG(true) = "00.000.000-0"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate telephone</h2>
+        <div class="description-code">
+          Function to generate a telephone.
+        </div>
+        <div class="code">
+          <code>
+            generateTelephone() = "+550030000000"
+          </code>
+        </div>
+        <div class="description-code">
+          with mask
+        </div>
+        <div class="code">
+          <code>
+            generateTelephone(true) = "+55(00)3000-0000"
+          </code>
+        </div>
+      </div>
+      <div class="container-code">
+        <h2>Generate cellphone</h2>
+        <div class="description-code">
+          Function to generate a cellphone.
+        </div>
+        <div class="code">
+          <code>
+            generateCellphone() = "+5500900000000"
+          </code>
+        </div>
+        <div class="description-code">
+          with mask
+        </div>
+        <div class="code">
+          <code>
+            generateCellphone(true) = "+55(00)90000-0000"
+          </code>
+        </div>
+      </div>
     </div>
   </div>
   <script src="registration-generator.js"></script>
