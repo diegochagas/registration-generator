@@ -154,8 +154,7 @@ function calculateDigitInscricaoEstadualSP (...digits) {
 function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento') {
   const states = brazilianStatesJSON.acronyms;
   states.push('SPP');
-  const randomIndex = generateRandomNumbers(states.length - 1);
-  const companyState = states[randomIndex];
+  const companyState = 'SP'; //choseRandomOption(states);
   let digits = [];
   let digit1 = 0;
   let digit2 = 0;
@@ -174,7 +173,7 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       }
       break;
     case 'AL':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digits[0]  = 2;
       digits[1]  = 4;
       if(digits[2] == 1) {
@@ -190,7 +189,7 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       inscricaoEstadual = printDocument(...digits, digit1);
       break;
     case 'AP':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digits[0]  = 0;
       digits[1]  = 3;
       digit1 = calculateDigit(9, ...digits);
@@ -256,7 +255,7 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       }
       break;
     case 'MA':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digits[0] = 1;
       digits[1] = 2;
       digit1 = calculateDigit(9, ...digits);
@@ -382,15 +381,15 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       }
       break;
     case 'SP':
-      digits = generateDigits(10);
+      digits = generateDigits(11);
       digit1 = calculateDigitInscricaoEstadualSP(...digits);
       digits[8] = digit1;
       digit2 = calculateDigit(11, ...digits);
       inscricaoEstadual = printDocument(...digits, digit2);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}.${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}${digits[6]}.${digits[7]}${digits[8]}`;
-        inscricaoEstadual += `${digit1}.${digits[10]}${digits[11]}${digit2}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}.${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}${digits[5]}.${digits[6]}${digits[7]}`;
+        inscricaoEstadual += `${digit1}.${digits[9]}${digits[10]}${digit2}`;
       }
       break;
     case 'SPP':
@@ -411,7 +410,7 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
         inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'TO':
