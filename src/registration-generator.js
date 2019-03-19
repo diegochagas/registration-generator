@@ -49,14 +49,15 @@ function generateDigits(amountOfDigits){
   return digits;
 }
 
-function calculateDigit(...digits){
-  let nums = digits;
+function calculateDigit(maxMultiplier, ...digits){
   let digit = 0;
-  for (let i = digits.length + 1, j = 0; j < digits.length; i--, j++) {
-    digit += parseInt(nums[j]) * i;
+  let lastPosition = digits.length - 1;
+  for(let i = lastPosition, j = 2; i >= 0; i--, j++) {
+    j = (j > maxMultiplier) ? 2 : j; 
+    digit += digits[i] * j;
   }
-  const y = digit % 11;
-  return y < 2 ? 0 : 11 - y; 
+  digit = 11 - (digit % 11);
+  return digit >= 10 ? 0 : digit; 
 }
 
 function printDocument(...digits) {
@@ -65,8 +66,8 @@ function printDocument(...digits) {
 
 function generateCPF(hasMask = false) {
   const digits = generateDigits(9);
-  const digit1 = calculateDigit(...digits); 
-  const digit2 = calculateDigit(...digits, digit1); 
+  const digit1 = calculateDigit(digits.length + 1, ...digits); 
+  const digit2 = calculateDigit(digits.length + 2, ...digits, digit1); 
   let cpf = printDocument(...digits, digit1, digit2);
   if(hasMask) {
     cpf = `${digits[0]}${digits[1]}${digits[2]}.${digits[3]}${digits[4]}${digits[5]}.${digits[6]}${digits[7]}${digits[8]}-${digit1}${digit2}`;
@@ -80,8 +81,8 @@ function generateCNPJ(hasMask = false) {
   digits[9] = 0;
   digits[10] = 0;
   digits[11] = 1;
-  const digit1 = calculateDigit(...digits);
-  const digit2 = calculateDigit(...digits, digit1);
+  const digit1 = calculateDigit(digits.length - 3, ...digits);
+  const digit2 = calculateDigit(digits.length - 3, ...digits, digit1);
   let cnpj = printDocument(...digits, digit1, digit2);
   if (hasMask) {
     cnpj = '' + digits[0] + digits[1] + '.' + digits[2] + digits[3] + digits[4] + '.' +
