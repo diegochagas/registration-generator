@@ -43,70 +43,36 @@ function choseRandomOption(list) {
 
 function generateDigits(amountOfDigits){
   const digits = [];
-  for(let i = 1; i <= amountOfDigits; i++) {
+  for(let i = 0; i < amountOfDigits; i++) {
     digits[i] = generateRandomNumbers(9);
   }
   return digits;
 }
 
-function calculateDigit (maxMultiplier, ...digits) {
+function calculateDigit(...digits){
+  let nums = digits;
   let digit = 0;
-  let amountOfDigits = digits.length;
-  let multiplier = 2;
-  for (let i = amountOfDigits; i >= 1; i--) {
-    multiplier = multiplier > maxMultiplier ? 2 : multiplier;
-    digit += digits[i] * multiplier;
-    multiplier++;
+  for (let i = digits.length + 1, j = 0; j < digits.length; i--, j++) {
+    digit += parseInt(nums[j]) * i;
   }
-  digit = 11 - (mod(digit, 11));
-  return (digit < 10) ? digit : 0;
-}
-
-function printDocument(...digits) {
-  let document = '';
-  for(let i = 1; i < digits.length; i++) {
-    document += digits[i];
-  }
-  return document;
-}
-
-function gerarCpf() {
-  const num1 = aleatorio(); //aleatorio já devolve string, logo não precisa de toString
-  const num2 = aleatorio();
-  const num3 = aleatorio();
-
-  const dig1 = dig(num1, num2, num3); //agora só uma função dig
-  const dig2 = dig(num1, num2, num3, dig1); //mesma função dig aqui
-
-  //aqui com interpolação de strings fica bem mais legivel
-  console.log( `${num1}.${num2}.${num3}-${dig1}${dig2}`);
-}
-
-//o quarto parametro(n4) só será recebido para o segundo digito
-function dig(n1, n2, n3, n4) {   
-  //as concatenações todas juntas uma vez que são curtas e legíveis
-  let nums = n1.split("").concat(n2.split(""), n3.split(""));
-  if (n4){ //se for o segundo digito coloca o n4 no sitio certo
-    nums[9] = n4;
-  }  
-  let x = 0;
-  //o j é também iniciado e incrementado no for para aproveitar a própria sintaxe dele
-  //o i tem inicios diferentes consoante é 1º ou 2º digito verificador
-  for (let i = (n4 ? 11:10), j = 0; i >= 2; i--, j++) {
-    x += parseInt(nums[j]) * i;
-  }
-  const y = x % 11;
-  //ternário aqui pois ambos os retornos são simples e continua legivel
+  const y = digit % 11;
   return y < 2 ? 0 : 11 - y; 
 }
 
-function aleatorio() {
-  const aleat = Math.floor(Math.random() * 999);
- //o preenchimento dos zeros à esquerda é mais facil com a função padStart da string
-  return ("" + aleat).padStart(3, '0'); 
+function printDocument(...digits) {
+  return digits.reduce((accumulator, digit) => accumulator + digit, '');
 }
 
-gerarCpf();
+function generateCPF(hasMask = false) {
+  const digits = generateDigits(9);
+  const digit1 = calculateDigit(...digits); 
+  const digit2 = calculateDigit(...digits, digit1); 
+  let cpf = printDocument(...digits, digit1, digit2);
+  if(hasMask) {
+    cpf = `${digits[0]}${digits[1]}${digits[2]}.${digits[3]}${digits[4]}${digits[5]}.${digits[6]}${digits[7]}${digits[8]}-${digit1}${digit2}`;
+  }
+  return cpf;
+}
 
 function generateBrazilianCPF(hasMask = false) {
   const digits = generateDigits(9);
@@ -120,7 +86,7 @@ function generateBrazilianCPF(hasMask = false) {
   return cpf;
 }
 
-function generateBrazilianCNPJ(hasMask = false) {
+function generateCNPJ(hasMask = false) {
   const digits = generateDigits(12);
   digits[9] = 0;
   digits[10] = 0;
