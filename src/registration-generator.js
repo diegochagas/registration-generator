@@ -111,7 +111,7 @@ function calculateSecondVerifyDigitTituloDeEleitor(digits, digit1) {
   return (digit2 <= 9) ? digit2 : 0;
 }
 
-function generateBrazilianTituloDeEleitor(hasMask = false) {
+function generateTituloDeEleitor(hasMask = false) {
   let digits = [];
   for(let i = 1; i <= 8; i++){
     digits[i] = generateRandomNumbers(9) % 9;
@@ -145,8 +145,8 @@ function generateRazaoSocial(){
 }
 
 function calculateDigitInscricaoEstadualSP (...digits) {
-  let digit = digits[8] * 10 + digits[7] * 8 + digits[6] * 7 + digits[5] * 6 + digits[4] * 5 +
-  digits[3] * 4 + digits[2] * 3 + digits[1] * 1;
+  let digit = digits[7] * 10 + digits[6] * 8 + digits[5] * 7 + digits[4] * 6 + digits[3] * 5 +
+  digits[2] * 4 + digits[1] * 3 + digits[0] * 1;
   digit = 11 - (mod(digit, 11));
   return (digit < 10) ? digit : 0;
 }
@@ -154,7 +154,7 @@ function calculateDigitInscricaoEstadualSP (...digits) {
 function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento') {
   const states = brazilianStatesJSON.acronyms;
   states.push('SPP');
-  const companyState = 'SP'; //choseRandomOption(states);
+  const companyState = choseRandomOption(states);
   let digits = [];
   let digit1 = 0;
   let digit2 = 0;
@@ -591,7 +591,7 @@ function selectCreditCardInformations(creditCardFlag){
   return creditCard;
 }
 
-function generateCreditCardBin(startWith, digits) {
+function calculateCreditCardBin(startWith, digits) {
   const startDigitsIn = startWith.length;
   let bin = "";
   if(startDigitsIn >= 1 && startDigitsIn <= 6) {
@@ -623,7 +623,7 @@ function calculateVerifyDigitCreditCard(creditCardNumber) {
 
 function printFullCreditCardNumber(card){
   const digits = generateDigits(7);
-  const bin = generateCreditCardBin(card.startWith, digits);
+  const bin = calculateCreditCardBin(card.startWith, digits);
   const randomSizeNumber = card.digitsSize - (bin.length + 1);
   let creditCardNumber = "" + bin;
   for (let i = 0; i < randomSizeNumber; i++) {
