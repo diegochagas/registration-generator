@@ -161,7 +161,7 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
   let digit2 = 0;
   switch(companyState) {
     case 'AC':
-      digits = generateDigits(8);
+      digits = generateDigits(11);
       digits[0] = 0;
       digits[1] = 1;
       digit1 = calculateDigit(9, ...digits);
@@ -197,62 +197,62 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       inscricaoEstadual = printDocument(...digits, digit1);
       break;
     case 'AM':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}.${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}.${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}.${digits[2]}${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}.${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'BA':
-      digits = generateDigits(5);
+      digits = generateDigits(6);
       digit1 = calculateDigit(9, ...digits);
       digit2 = calculateDigit(9, digit1, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1, digit2);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}${digits[6]}-${digit1}${digit2}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}${digits[5]}-${digit1}${digit2}`;
       }
       break;
     case 'CE':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'DF':
-      digits = generateDigits(10);
+      digits = generateDigits(11);
       digits[0] = 0;
       digits[1] = 7;
       digit1 = calculateDigit(9, ...digits);
       digit2 = calculateDigit(9, digit1, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1, digit2);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}.${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}.${digits[6]}${digits[7]}${digits[8]}.`;
-        inscricaoEstadual += `${digits[9]}${digits[10]}${digits[11]}-${digit1}${digit2}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}.${digits[2]}${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}.${digits[5]}${digits[6]}${digits[7]}.`;
+        inscricaoEstadual += `${digits[8]}${digits[9]}${digits[10]}-${digit1}${digit2}`;
       }
       break;
     case 'ES':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'GO':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}.${digits[3]}${digits[4]}${digits[5]}.`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}.${digits[2]}${digits[3]}${digits[4]}.`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'MA':
@@ -263,72 +263,72 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       inscricaoEstadual = printDocument(...digits, digit1);
       break;
     case 'MS':
-      digits = generateDigits(9);
+      digits = generateDigits(10);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}${digits[8]}`;
-        inscricaoEstadual += `${digits[9]}${digits[10]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}${digits[5]}${digits[6]}${digits[7]}`;
+        inscricaoEstadual += `${digits[8]}${digits[9]}-${digit1}`;
       }
       break;
     case 'MT':
-      digits = generateDigits(9);
+      digits = generateDigits(10);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}${digits[8]}`;
-        inscricaoEstadual += `${digits[9]}${digits[10]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}${digits[5]}${digits[6]}${digits[7]}`;
+        inscricaoEstadual += `${digits[8]}${digits[9]}-${digit1}`;
       }
       break;
     case 'MG':
       break;
     case 'PA':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'PB':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'PR':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       digit2 = calculateDigit(7, digit1, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1, digit2);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}${digit2}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}${digit2}`;
       }
       break;
     case 'PE':
-      digits = generateDigits(6);
+      digits = generateDigits(7);
       digit1 = calculateDigit(9, ...digits);
       digit2 = calculateDigit(9, digit1, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1, digit2);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}-${digit1}${digit2}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}-${digit1}${digit2}`;
       }
       break;
     case 'PI':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'RJ':
@@ -336,40 +336,40 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       digit1 = calculateDigit(7, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}.${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}.${digits[6]}${digits[7]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}.${digits[2]}${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}.${digits[5]}${digits[6]}-${digit1}`;
       }
       break;
     case 'RN':
       break;
     case 'RS':
-      digits = generateDigits(8);
+      digits = generateDigits(9);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}/${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}${digits[9]}${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}/${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}${digits[8]}${digit1}`;
       }
       break;
     case 'RO':
-      digits = generateDigits(12);
+      digits = generateDigits(13);
       digits[0] = 0;
       digits[1] = 7;
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}${digits[9]}${digits[10]}`;
-        inscricaoEstadual += `${digits[11]}${digits[12]}${digits[13]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}${digits[8]}${digits[9]}`;
+        inscricaoEstadual += `${digits[10]}${digits[11]}${digits[12]}-${digit1}`;
       }
       break;
     case 'RR':
-      digits = generateDigits(7);
+      digits = generateDigits(8);
       digit1 = digits.reduce((accumulator, digit, index) => accumulator + (digit * index), 0);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit1}`;
       }
       break;
     case 'SC':
@@ -377,8 +377,8 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}.${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}.${digits[7]}${digits[8]}${digit1}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}.${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}.${digits[6]}${digits[7]}${digit1}`;
       }
       break;
     case 'SP':
@@ -394,24 +394,24 @@ function generateInscricaoEstadual(hasMask = false, inscricaoEstadual = 'Isento'
       }
       break;
     case 'SPP':
-      digits = generateDigits(11);
+      digits = generateDigits(12);
       digits[0]  = 0;
       digit1 = calculateDigitInscricaoEstadualSP(...digits);
       digits[8] = digit1;
       inscricaoEstadual = 'P' + printDocument(...digits);
       if (hasMask) {
-        inscricaoEstadual = `P${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
-        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}${digits[8]}.`;
-        inscricaoEstadual += `${digit1}/${digits[10]}${digits[11]}${digits[12]}`;
+        inscricaoEstadual = `P${digits[0]}${digits[1]}${digits[2]}${digits[3]}`;
+        inscricaoEstadual += `${digits[4]}${digits[5]}${digits[6]}${digits[7]}.`;
+        inscricaoEstadual += `${digit1}/${digits[9]}${digits[10]}${digits[11]}`;
       }
       break;
     case 'SE':
-      digits = generateDigits(8);
+      digits = generateDigits(9);
       digit1 = calculateDigit(9, ...digits);
       inscricaoEstadual = printDocument(...digits, digit1);
       if (hasMask) {
-        inscricaoEstadual = `${digits[1]}${digits[2]}${digits[3]}${digits[4]}${digits[5]}`;
-        inscricaoEstadual += `${digits[6]}${digits[7]}${digits[8]}-${digit}`;
+        inscricaoEstadual = `${digits[0]}${digits[1]}${digits[2]}${digits[3]}${digits[4]}`;
+        inscricaoEstadual += `${digits[5]}${digits[6]}${digits[7]}-${digit}`;
       }
       break;
     case 'TO':
