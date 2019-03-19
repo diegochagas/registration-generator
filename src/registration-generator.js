@@ -74,31 +74,19 @@ function generateCPF(hasMask = false) {
   return cpf;
 }
 
-function generateBrazilianCPF(hasMask = false) {
-  const digits = generateDigits(9);
-  const digit1 = calculateDigit(10, ...digits);
-  const digit2 = calculateDigit(11, digit1, ...digits);
-  let cpf = printDocument(...digits, digit1, digit2);
-  if (hasMask) {
-    cpf = '' + digits[1] + digits[2] + digits[3] + '.' + digits[4] + digits[5] +
-      digits[6] + '.' + digits[7] + digits[8] + digits[9] + '-' + digit1 + digit2;
-  }
-  return cpf;
-}
-
 function generateCNPJ(hasMask = false) {
-  const digits = generateDigits(12);
+  const digits = generateDigits(8);
+  digits[8] = 0;
   digits[9] = 0;
   digits[10] = 0;
-  digits[11] = 0;
-  digits[12] = 1;
-  const digit1 = calculateDigit(9, ...digits);
-  const digit2 = calculateDigit(9, ...digits, digit1);
+  digits[11] = 1;
+  const digit1 = calculateDigit(...digits);
+  const digit2 = calculateDigit(...digits, digit1);
   let cnpj = printDocument(...digits, digit1, digit2);
   if (hasMask) {
-    cnpj = '' + digits[1] + digits[2] + '.' + digits[3] + digits[4] + digits[5] + '.' +
-      digits[6] + digits[7] + digits[8] + '/' + digits[9] + digits[10] + digits[11] +
-      digits[12] + '-'+ digit1 + digit2;
+    cnpj = '' + digits[0] + digits[1] + '.' + digits[2] + digits[3] + digits[4] + '.' +
+      digits[5] + digits[6] + digits[7] + '/' + digits[8] + digits[9] + digits[10] +
+      digits[11] + '-'+ digit1 + digit2;
   }
   return cnpj;
 }
