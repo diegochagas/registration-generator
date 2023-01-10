@@ -171,3 +171,7 @@ with mask
 Function to generate a object containing credit card informations.
 
 `generateCreditCard() = {flag: "Flag", creditCardNumber: "000000000000000", CVC: 000, expirationDate: "00/0000"}`
+
+---
+
+# Jesus said to him, "I am the way, and the truth, and the life. No one comes to the Father except through me." - John 14:6
